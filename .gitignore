@@ -1,0 +1,61 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+package-lock.json
+pnpm-lock.yaml
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build outputs
+dist/
+build/
+*.js
+*.js.map
+*.d.ts
+!*.config.js
+
+# Temporary test files
+test-*.ts
+*-test.ts
+
+# Archives
+archive/
+*.bak
+
+# Cookies
+cookies.txt
+
+# Articles (generated)
+articles/*.html
+articles/*.md
+!articles/.gitkeep
+
+# Sensitive data
+MEMORY.md
+memory/
+skills/scripts/config.json
+skills/scripts/articles/
+skills/references/
+
+# Generated files
+skills/scripts/*.js
+skills/scripts/*.d.ts
