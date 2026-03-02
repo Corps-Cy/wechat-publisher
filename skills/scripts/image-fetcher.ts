@@ -1,7 +1,9 @@
 /**
  * 图片获取工具
  * 
- * 从 Unsplash 免费图库获取封面和配图
+ * 图片来源优先级：
+ * 1. AI 生成（使用 doocs 免费代理）- 推荐
+ * 2. Unsplash 免费图库 - 备选
  */
 
 import { writeFileSync } from 'fs'
@@ -9,11 +11,88 @@ import { join } from 'path'
 
 const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY || ''
 
+// AI 图片生成配置（使用 doocs 免费代理）
+const AI_IMAGE_ENDPOINT = 'https://proxy-ai.doocs.org/v1'
+const AI_IMAGE_MODEL = 'Kwai-Kolors/Kolors'
+
 export interface ImageResult {
   url: string
   alt: string
   author?: string
   source?: string
+  isAIGenerated?: boolean
+}
+
+// ============================================================================
+// AI 图片生成（优先使用）
+// ============================================================================
+
+/**
+ * 使用 AI 生成图片
+ */
+async function generateAIImage(prompt: string): Promise<ImageResult | null> {
+  console.log(`🎨 尝试使用 AI 生成图片: ${prompt.substring(0, 50)}...\n`)
+  
+  try {
+    const response = await fetch(`${AI_IMAGE_ENDPOINT}/images/generations`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: AI_IMAGE_MODEL,
+        prompt: `${prompt}. High quality, professional.`,
+        size: '1024x1024',
+        n: 1,
+      }),
+    })
+
+    if (!response.ok) {
+      console.warn(`⚠️  AI 图片生成失败: ${response.status}，回退到 Unsplash\n`)
+      return null
+    }
+
+    const data = await response.json() as any
+    
+    // API 返回格式：{ images: [{ url: ... }], data: [{ url: ... }] }
+    const imageUrl = data.images?.[0]?.url || data.data?.[0]?.url
+    
+    if (imageUrl) {
+      console.log(`✅ AI 图片生成成功\n`)
+      return {
+        url: imageUrl,
+        alt: prompt,
+        author: 'AI Generated',
+        source: 'Kolors AI',
+        isAIGenerated: true,
+      }
+    }
+    
+    console.warn(`⚠️  AI 返回数据格式错误，回退到 Unsplash\n`)
+    return null
+  } catch (error) {
+    console.warn(`⚠️  AI 图片生成失败: ${error}，回退到 Unsplash\n`)
+    return null
+  }
+}
+
+/**
+ * 智能生成封面图片（AI 优先）
+ */
+async function generateAICover(title: string): Promise<ImageResult | null> {
+  // 构建提示词
+  const techKeywords = ['技术', '开发', '编程', '代码', 'AI', '人工智能', '教程', '安装', '部署', 'OpenClaw']
+  const isTech = techKeywords.some(kw => title.includes(kw))
+  
+  let stylePrompt = ''
+  if (isTech) {
+    stylePrompt = 'modern technology style, clean code aesthetic, minimalist design, blue and white color scheme, futuristic, digital art'
+  } else {
+    stylePrompt = 'elegant illustration style, modern design, soft colors, clean composition, artistic'
+  }
+  
+  const prompt = `${title}. ${stylePrompt}. High quality cover image.`
+  return generateAIImage(prompt)
 }
 
 /**
@@ -119,7 +198,7 @@ export async function fetchCoverImage(
 }
 
 /**
- * 获取文章配图
+ * 获取文章配图（优先使用 AI 生成）
  */
 export async function fetchArticleImages(
   topic: string,
@@ -127,11 +206,28 @@ export async function fetchArticleImages(
 ): Promise<ImageResult[]> {
   console.log(`🖼️  获取文章配图: ${topic} (x${count})\n`)
   
-  const images = await searchUnsplash(topic, { count, orientation: 'landscape' })
+  const results: ImageResult[] = []
   
-  console.log(`✅ 配图获取成功 (${images.length} 张)\n`)
+  // 逐个生成图片
+  for (let i = 0; i < count; i++) {
+    // 1. 优先使用 AI 生成
+    const aiImage = await generateAIImage(`${topic} illustration ${i + 1}`)
+    if (aiImage) {
+      results.push(aiImage)
+      continue
+    }
+    
+    // 2. AI 失败，回退到 Unsplash
+    console.log(`📸 回退到 Unsplash 获取第 ${i + 1} 张配图...\n`)
+    const unsplashImages = await searchUnsplash(topic, { count: 1, orientation: 'landscape' })
+    if (unsplashImages.length > 0) {
+      results.push(unsplashImages[0])
+    }
+  }
   
-  return images
+  console.log(`✅ 配图获取成功 (${results.length} 张)\n`)
+  
+  return results
 }
 
 /**
@@ -160,17 +256,26 @@ export async function downloadImage(
 
 /**
  * 获取符合主题的封面图片（智能推荐）
+ * 优先使用 AI 生成，失败则回退到 Unsplash
  */
 export async function getSmartCover(
   title: string,
   content?: string
 ): Promise<ImageResult> {
-  // 从标题中提取关键词
-  const keywords = extractKeywords(title, content)
+  // 1. 优先使用 AI 生成封面
+  console.log(`🖼️  开始获取封面图片...\n`)
   
+  const aiImage = await generateAICover(title)
+  if (aiImage) {
+    return aiImage
+  }
+  
+  // 2. AI 失败，回退到 Unsplash
+  console.log(`📸 回退到 Unsplash 图库...\n`)
+  
+  const keywords = extractKeywords(title, content)
   console.log(`🔍 关键词提取: ${keywords.join(', ')}\n`)
   
-  // 尝试不同的关键词组合
   for (const keyword of keywords) {
     try {
       const image = await fetchCoverImage(keyword)
@@ -180,7 +285,7 @@ export async function getSmartCover(
     }
   }
   
-  // 如果所有关键词都失败，使用通用关键词
+  // 3. 如果所有关键词都失败，使用通用关键词
   return fetchCoverImage('technology')
 }
 

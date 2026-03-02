@@ -1,247 +1,556 @@
 # 微信公众号文章格式规范
 
+> 基于 doocs/md 项目最佳实践配置
+
+## 核心配置（必须遵守）
+
+### 默认样式配置
+
+```typescript
+const defaultStyleConfig = {
+  theme: 'default',              // 经典主题
+  fontFamily: '-apple-system-font,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei UI,Microsoft YaHei,Arial,sans-serif',  // 无衬线
+  fontSize: '14px',              // 更小字号
+  codeBlockTheme: 'github-dark-dimmed',  // 代码块主题
+  legend: 'title-alt',           // 图注格式：title 优先
+  isMacCodeBlock: true,          // Mac 代码块：开启
+  isShowLineNumber: true,        // 代码块行号：开启
+}
+```
+
 ## 核心原则
 
 **微信公众号只支持内联样式（inline style），不支持外部 CSS 或 `<style>` 标签。**
 
 所有样式必须直接写在 `style="..."` 属性中。
 
-## 代码块格式规范
+---
 
-### 问题诊断
-
-❌ **错误做法**（代码看不清）：
-```html
-<pre style="background-color: #282c34;">
-  <code class="hljs language-bash">
-    # 注释（依赖外部 CSS，微信不支持）
-    node --version
-  </code>
-</pre>
-```
-
-**问题**：
-- 深色背景 `#282c34`
-- 代码文字没有颜色样式
-- highlight.js 的 class 依赖外部 CSS
-- 结果：深色背景 + 无颜色文字 = 看不清
-
-✅ **正确做法**（完全内联）：
-```html
-<pre style="background-color: #f6f8fa; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 15px 0; font-size: 14px; line-height: 1.6;">
-  <code style="background-color: transparent; padding: 0; color: #24292e; font-size: 14px;" class="hljs language-bash">
-    <span class="hljs-comment" style="color: #6a737d; font-style: italic;"># 注释</span>
-    node --version
-  </code>
-</pre>
-```
-
-**优点**：
-- 浅色背景 `#f6f8fa`（GitHub 风格）
-- 深灰文字 `#24292e`（高对比度）
-- 语法高亮样式完全内联
-- 微信完美支持
-
-### 标准配色方案
-
-参考 GitHub、VS Code 的配色：
-
-| 元素 | 颜色 | 说明 |
-|------|------|------|
-| **代码块背景** | `#f6f8fa` | 浅灰（GitHub 风格） |
-| **代码文字** | `#24292e` | 深灰（高对比度） |
-| **注释** | `#6a737d` | 灰色斜体 |
-| **关键字** | `#d73a49` | 红色 |
-| **字符串** | `#032f62` | 蓝色 |
-| **数字** | `#005cc5` | 蓝色 |
-| **函数名** | `#6f42c1` | 紫色 |
-
-### 行内代码规范
-
-行内代码（`` `code` ``）使用主题色：
-
-```html
-<code style="background-color: #f8f0f4; padding: 2px 6px; border-radius: 3px; font-size: 14px; font-family: monospace; color: #92617E;">
-  v22.0.0
-</code>
-```
-
-- **背景**：主题浅色（玫瑰金：`#f8f0f4`）
-- **文字**：主题色（玫瑰金：`#92617E`）
-
-## 完整格式规范
-
-### 容器
+## 容器基础样式
 
 ```css
-padding: 20px 15px;
-font-size: 16px;
-line-height: 1.8;
-color: #333;
-font-family: -apple-system-font, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
-```
-
-### 标题
-
-- **H1**: `24px` 加粗 居中 `#333`
-- **H2**: `20px` 加粗 主题色 左边框
-- **H3**: `18px` 加粗 主题色
-- **H4**: `16px` 加粗 `#555`
-
-### 段落
-
-```css
-margin: 10px 0;
-text-align: justify;
-word-wrap: break-word;
-```
-
-### 引用块
-
-```css
-margin: 15px 0;
-padding: 15px 20px;
-background-color: [主题背景色];
-border-left: 4px solid [主题色];
-color: #555;
-border-radius: 3px;
-```
-
-### 表格
-
-```css
-/* 表格 */
-width: 100%;
-border-collapse: collapse;
-margin: 15px 0;
+font-family: -apple-system-font, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif;
 font-size: 14px;
-
-/* 表头 */
-background-color: [主题背景色];
-font-weight: bold;
-
-/* 单元格 */
-border: 1px solid [主题色];
-padding: 10px;
+line-height: 1.75;
 text-align: left;
+color: #333;
 ```
 
-### 列表
+---
 
-**❌ 错误做法**（微信不支持）：
+## 标题样式（经典主题 default）
+
+### 一级标题 H1
+
 ```css
-ul: 'list-style-type: disc;'
-ol: 'list-style-type: decimal;'
+display: table;
+padding: 0 1em;
+border-bottom: 2px solid var(--md-primary-color);
+margin: 2em auto 1em;
+font-size: calc(14px * 1.2);  /* 16.8px */
+font-weight: bold;
+text-align: center;
+color: #333;
 ```
 
-**✅ 正确做法**（手动前缀）：
+**⚠️ 注意：微信公众号编辑器已有标题字段，内容中应移除 H1 避免重复！**
+
+### 二级标题 H2
+
 ```css
-ul: 'padding-left: 0; list-style-type: none;'
-ol: 'padding-left: 0; list-style-type: none;'
-li: 'margin: 5px 0 5px 25px; text-indent: -20px;'
+display: table;
+padding: 0 0.2em;
+margin: 4em auto 2em;
+background: var(--md-primary-color);
+font-size: calc(14px * 1.2);  /* 16.8px */
+font-weight: bold;
+text-align: center;
+color: #fff;
 ```
 
-**HTML 输出**：
-```html
-<!-- 无序列表 -->
-<ul style="list-style-type: none;">
-  <li style="...">
-    <span style="margin-right: 8px;">•</span>
-    列表项内容
-  </li>
-</ul>
+### 三级标题 H3
 
-<!-- 有序列表 -->
-<ol style="list-style-type: none;">
-  <li style="...">
-    <span style="margin-right: 8px; font-weight: bold;">1.</span>
-    列表项内容
-  </li>
-</ol>
+```css
+padding-left: 8px;
+border-left: 3px solid var(--md-primary-color);
+margin: 2em 8px 0.75em 0;
+font-size: calc(14px * 1.1);  /* 15.4px */
+font-weight: bold;
+line-height: 1.2;
+color: #333;
 ```
 
-**关键原则**：
-- 微信公众号不支持 `list-style-type`
-- 必须手动为每个 `<li>` 添加前缀符号
-- 无序列表：`•` （Unicode 圆点）
-- 有序列表：`1.` `2.` `3.` ...（手动编号）
+### 四级标题 H4
 
-## 主题配色
+```css
+margin: 2em 8px 0.5em;
+font-size: 14px;
+font-weight: bold;
+color: var(--md-primary-color);
+```
 
-### 玫瑰金（roseGold）
+---
 
-```typescript
-{
-  primary: '#92617E',      // 主题色（标题、强调）
-  secondary: '#7a4f6a',    // 辅助色
-  background: '#f8f0f4',   // 背景色（引用、表格）
-  inlineCodeBg: '#f8f0f4', // 行内代码背景
-  inlineCodeText: '#92617E', // 行内代码文字
-  codeBlockBg: '#f6f8fa',  // 代码块背景（固定）
-  codeText: '#24292e'      // 代码文字（固定）
+## 代码块样式（github-dark-dimmed）
+
+### 基础代码块样式
+
+```css
+/* 代码块容器 */
+pre {
+  font-size: 90%;              /* 12.6px */
+  overflow-x: auto;
+  border-radius: 8px;
+  padding: 0 !important;
+  line-height: 1.5;
+  margin: 10px 8px;
+}
+
+/* 代码块内代码 */
+pre > code {
+  display: block;
+  padding: 0.5em 1em 1em;
+  overflow-x: auto;
+  color: inherit;
+  background: none;
+  white-space: nowrap;
 }
 ```
 
-**关键原则**：
-- 代码块使用固定配色（GitHub 风格），不随主题变化
-- 保证代码可读性优先
-- 行内代码可以使用主题色
+### Mac 代码块样式（isMacCodeBlock: true）
 
-## 语法高亮实现
+```css
+/* Mac 风格代码块 */
+.mac-code-block {
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 10px 8px;
+}
 
-### 步骤
+/* Mac 顶部栏 */
+.mac-code-block::before {
+  content: '';
+  display: block;
+  height: 30px;
+  background: #1e2128;
+  border-radius: 5px 5px 0 0;
+  position: relative;
+}
 
-1. **使用 highlight.js 解析代码**
-2. **为生成的 span 标签添加内联样式**
-3. **应用代码块基础样式**
-
-### 代码示例
-
-```typescript
-// 1. 解析代码
-const highlighted = hljs.highlight(code, { language }).value
-
-// 2. 添加内联样式
-const styled = highlighted.replace(
-  /class="(hljs-[^"]+)"/g,
-  'class="$1" style="color: #6a737d;"'
-)
-
-// 3. 包裹在 pre/code 中
-const html = `<pre style="background-color: #f6f8fa; padding: 15px;">
-  <code style="color: #24292e;">${styled}</code>
-</pre>`
+/* Mac 三色按钮 */
+.mac-code-block::after {
+  content: '●●●';
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: #ff5f56;
+}
 ```
+
+### 行号样式（isShowLineNumber: true）
+
+```css
+/* 带行号的代码 */
+.code-line {
+  display: flex;
+}
+
+.line-number {
+  min-width: 40px;
+  padding-right: 10px;
+  text-align: right;
+  color: #768390;
+  user-select: none;
+  border-right: 1px solid #373e47;
+  margin-right: 10px;
+}
+
+.line-content {
+  flex: 1;
+}
+```
+
+### github-dark-dimmed 配色方案
+
+```css
+/* 背景 */
+.hljs {
+  color: #adbac7;
+  background: #22272e;
+}
+
+/* 关键字、类型 */
+.hljs-keyword,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-variable.language_ {
+  color: #f47067;
+}
+
+/* 函数名、类名 */
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.function_ {
+  color: #dcbdfb;
+}
+
+/* 属性、数字、字面量 */
+.hljs-attr,
+.hljs-literal,
+.hljs-number,
+.hljs-variable {
+  color: #6cb6ff;
+}
+
+/* 字符串 */
+.hljs-string,
+.hljs-regexp {
+  color: #96d0ff;
+}
+
+/* 注释 */
+.hljs-comment {
+  color: #768390;
+  font-style: italic;
+}
+
+/* 内置函数 */
+.hljs-built_in {
+  color: #f69d50;
+}
+
+/* 强调 */
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+```
+
+### 完整代码块 HTML 示例
+
+```html
+<!-- Mac 风格代码块 + 行号 -->
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <!-- Mac 顶部栏 -->
+  <div style="height: 30px; background: #1e2128; position: relative;">
+    <span style="position: absolute; top: 8px; left: 12px; font-size: 12px; letter-spacing: 4px;">
+      <span style="color: #ff5f56;">●</span>
+      <span style="color: #ffbd2e;">●</span>
+      <span style="color: #27c93f;">●</span>
+    </span>
+  </div>
+  <!-- 代码内容 -->
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;">
+    <code style="color: #adbac7; font-size: 12.6px; line-height: 1.5; font-family: Menlo, Monaco, 'Courier New', monospace;">
+      <div style="display: flex;">
+        <span style="min-width: 40px; text-align: right; color: #768390; border-right: 1px solid #373e47; margin-right: 10px; padding-right: 10px;">1</span>
+        <span><span style="color: #f47067;">const</span> <span style="color: #6cb6ff;">app</span> = <span style="color: #dcbdfb;">express</span>();</span>
+      </div>
+      <div style="display: flex;">
+        <span style="min-width: 40px; text-align: right; color: #768390; border-right: 1px solid #373e47; margin-right: 10px; padding-right: 10px;">2</span>
+        <span><span style="color: #768390; font-style: italic;">// 启动服务</span></span>
+      </div>
+    </code>
+  </pre>
+</section>
+```
+
+---
+
+## 行内代码样式
+
+```css
+font-size: 90%;                  /* 12.6px */
+color: #d14;
+background: rgba(27, 31, 35, 0.05);
+padding: 3px 5px;
+border-radius: 4px;
+```
+
+### HTML 示例
+
+```html
+<code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">npm install</code>
+```
+
+---
+
+## 图片样式
+
+### 基础图片
+
+```css
+display: block;
+max-width: 100%;
+margin: 0.1em auto 0.5em;
+border-radius: 4px;
+```
+
+### 图注样式（legend: title-alt）
+
+**title 优先规则：**
+1. 优先使用 `![alt](url "title")` 中的 title
+2. 如果没有 title，使用 alt
+3. 只显示 title 或只显示 alt
+
+```css
+figcaption {
+  text-align: center;
+  color: #888;
+  font-size: 0.8em;  /* 11.2px */
+  margin-top: 0.5em;
+}
+```
+
+### HTML 示例
+
+```html
+<figure style="margin: 1.5em 8px;">
+  <img src="https://example.com/image.jpg" alt="示例图片" style="display: block; max-width: 100%; margin: 0 auto; border-radius: 4px;">
+  <figcaption style="text-align: center; color: #888; font-size: 11.2px; margin-top: 0.5em;">这是图片标题</figcaption>
+</figure>
+```
+
+---
+
+## 段落样式
+
+```css
+margin: 1.5em 8px;
+letter-spacing: 0.1em;
+color: #333;
+```
+
+---
+
+## 引用块样式
+
+```css
+font-style: normal;
+padding: 1em;
+border-left: 4px solid var(--md-primary-color);
+border-radius: 6px;
+color: #333;
+background: #f8f8f8;
+margin-bottom: 1em;
+```
+
+### HTML 示例
+
+```html
+<blockquote style="font-style: normal; padding: 1em; border-left: 4px solid #0F4C81; border-radius: 6px; color: #333; background: #f8f8f8; margin: 1em 8px;">
+  <p style="margin: 0; font-size: 14px; letter-spacing: 0.1em;">这是一段引用文字</p>
+</blockquote>
+```
+
+---
+
+## 列表样式
+
+### 无序列表
+
+```css
+ul {
+  list-style: circle;
+  padding-left: 1em;
+  margin-left: 0;
+}
+
+li {
+  display: block;
+  margin: 0.2em 8px;
+}
+```
+
+### 有序列表
+
+```css
+ol {
+  padding-left: 1em;
+  margin-left: 0;
+}
+```
+
+**⚠️ 微信公众号可能不支持 `list-style-type`，建议手动添加前缀：**
+
+```html
+<!-- 无序列表 -->
+<ul style="list-style: circle; padding-left: 1em;">
+  <li style="margin: 0.2em 8px;">列表项 1</li>
+  <li style="margin: 0.2em 8px;">列表项 2</li>
+</ul>
+
+<!-- 如果 list-style 不生效，使用手动前缀 -->
+<ul style="list-style: none; padding-left: 0;">
+  <li style="margin: 0.2em 8px;"><span style="margin-right: 8px;">•</span>列表项 1</li>
+  <li style="margin: 0.2em 8px;"><span style="margin-right: 8px;">•</span>列表项 2</li>
+</ul>
+```
+
+---
+
+## 表格样式
+
+```css
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #333;
+}
+
+th {
+  border: 1px solid #dfdfdf;
+  padding: 0.25em 0.5em;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+td {
+  border: 1px solid #dfdfdf;
+  padding: 0.25em 0.5em;
+}
+```
+
+---
+
+## 分隔线样式
+
+```css
+border-style: solid;
+border-width: 2px 0 0;
+border-color: rgba(0, 0, 0, 0.1);
+transform-origin: 0 0;
+transform: scale(1, 0.5);
+height: 0.4em;
+margin: 1.5em 0;
+```
+
+---
+
+## 链接样式
+
+```css
+color: #576b95;
+text-decoration: none;
+```
+
+---
+
+## 强调样式
+
+### 粗体
+
+```css
+color: var(--md-primary-color);
+font-weight: bold;
+```
+
+### 斜体
+
+```css
+font-style: italic;
+```
+
+---
+
+## 主题色变量
+
+```css
+/* 经典蓝（默认） */
+--md-primary-color: #0F4C81;
+
+/* 其他可选主题色 */
+/* 翡翠绿: #009874 */
+/* 活力橘: #FA5151 */
+/* 薰衣紫: #92617E */
+/* 玫瑰金: #B76E79 */
+```
+
+---
+
+## ❌ 绝对禁止
+
+```html
+<!-- ❌ 标题重复 -->
+<h1>文章标题</h1>  <!-- 公众号编辑器已有标题 -->
+
+<!-- ❌ 深色背景 + 无颜色文字（看不清） -->
+<pre style="background-color: #282c34;">
+  <code>代码（看不清）</code>
+</pre>
+
+<!-- ❌ 使用外部 CSS class（微信不支持） -->
+<pre>
+  <code class="hljs language-bash">npm install</code>
+</pre>
+
+<!-- ❌ 依赖 list-style-type（可能不生效） -->
+<ul style="list-style-type: disc;">
+  <li>项目</li>
+</ul>
+```
+
+---
+
+## ✅ 正确做法
+
+```html
+<!-- ✅ 标题：只在公众号编辑器填写，内容中不包含 -->
+
+<!-- ✅ 代码块：github-dark-dimmed 主题 + Mac 风格 + 行号 -->
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; position: relative;">
+    <span style="position: absolute; top: 8px; left: 12px; font-size: 12px; letter-spacing: 4px;">
+      <span style="color: #ff5f56;">●</span>
+      <span style="color: #ffbd2e;">●</span>
+      <span style="color: #27c93f;">●</span>
+    </span>
+  </div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;">
+    <code style="color: #adbac7; font-size: 12.6px;">
+      <span style="color: #f47067;">const</span> app = <span style="color: #dcbdfb;">express</span>();
+    </code>
+  </pre>
+</section>
+
+<!-- ✅ 列表：手动添加前缀（兼容性更好） -->
+<ul style="list-style: none; padding-left: 0;">
+  <li style="margin: 0.2em 8px;"><span style="margin-right: 8px;">•</span>列表项</li>
+</ul>
+```
+
+---
 
 ## 验证清单
 
 发布前检查：
 
 - [ ] 所有样式都是内联的（`style="..."`）
-- [ ] 代码块背景是浅色（`#f6f8fa`）
-- [ ] 代码文字是深色（`#24292e`）
+- [ ] 字体使用无衬线字体
+- [ ] 字号使用 14px
+- [ ] 代码块使用 github-dark-dimmed 主题
+- [ ] 代码块背景是 `#22272e`
+- [ ] 代码文字是 `#adbac7`
 - [ ] 语法高亮样式已内联
-- [ ] 行内代码使用主题色
-- [ ] 对比度足够（WCAG AA 标准）
+- [ ] 代码块有 Mac 风格三色按钮
+- [ ] 代码块有行号
+- [ ] 图注使用 title 优先格式
+- [ ] 列表项有手动前缀（如不生效）
+- [ ] 标题不在内容中重复
 
-## 工具函数
+---
 
-### 检查内联样式
+## 相关资源
 
-```bash
-# 检查是否还有 class 依赖
-grep -o 'class="[^"]*"' article.html
-
-# 检查代码块样式
-grep -A 5 '<pre' article.html
-```
-
-### 预览效果
-
-1. 在浏览器打开 `_preview.html`
-2. 检查代码块是否清晰可读
-3. 检查行内代码是否美观
-4. 复制 HTML 到公众号后台测试
+- doocs/md 项目：https://github.com/doocs/md
+- 在线编辑器：https://md.doocs.org
+- github-dark-dimmed 主题：https://github.com/highlightjs/highlight.js
 
 ---
 

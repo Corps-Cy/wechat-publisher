@@ -30,10 +30,79 @@ description: |
 
 1. **标题不重复**：内容中移除 `<h1>` 标题（公众号编辑器已有标题字段）
 2. **所有样式必须内联**：每个 HTML 标签都必须有 `style="..."` 属性
-3. **代码块必须可读**：浅色背景 + 深色文字（高对比度）
+3. **代码块必须可读**：github-dark-dimmed 主题 + Mac 风格 + 行号
 4. **列表必须手动编号**：微信不支持 `list-style-type`
-5. **自动获取封面**：从 Unsplash 获取符合主题的封面图
-6. **图文并茂**：自动替换 `IMAGE_PLACEHOLDER` 为真实配图
+5. **AI 生成封面**：优先使用 AI 生成（免费），失败则回退到 Unsplash
+6. **图文并茂**：自动替换 `IMAGE_PLACEHOLDER` 为 AI 生成图片
+
+## 🆕 扩展功能支持
+
+### 1. AI 图片生成
+
+**优先使用 AI 生成封面和配图**（免费）：
+- 服务：doocs AI 代理（`https://proxy-ai.doocs.org/v1`）
+- 模型：Kolors（免费）
+- 无需 API Key
+
+```bash
+# 手动生成图片
+npx tsx ai-image-generator.ts "一只可爱的猫咪在编程"
+
+# 生成封面
+npx tsx ai-image-generator.ts --cover "OpenClaw 安装教程"
+```
+
+### 2. GFM 警告块
+
+在文章中使用警告块强调重要信息：
+
+```markdown
+> [!NOTE] 提示
+> 这是一个提示信息
+
+> [!TIP] 小技巧
+> 这是一个技巧
+
+> [!WARNING] 注意
+> 这是一个警告
+
+> [!CAUTION] 危险
+> 这是一个危险提示
+```
+
+### 3. 数学公式
+
+支持行内和块级数学公式（KaTeX 风格）：
+
+```markdown
+行内公式：$E = mc^2$
+
+块级公式：
+$$
+\frac{-b \pm \sqrt{b^2-4ac}}{2a}
+$$
+```
+
+### 4. Mermaid 图表
+
+支持 Mermaid 图表语法（会转换为图片占位符提示）：
+
+```markdown
+```mermaid
+graph LR
+  A[开始] --> B[处理]
+  B --> C[结束]
+```
+```
+
+### 5. Ruby 注音
+
+支持生僻字注音：
+
+```markdown
+[人工智能]{ren-gong-zhi-neng}
+[API]^(Application Programming Interface)
+```
 
 ### ❌ 绝对禁止
 
@@ -45,16 +114,48 @@ description: |
 </section>
 
 <!-- ❌ 错误：微信不支持 list-style-type -->
-ul { list-style-type: disc; }
-ol { list-style-type: decimal; }
+<ul style="list-style-type: disc;">
+  <li>项目</li>
+</ul>
+
+<!-- ❌ 错误：list-style: circle 也不支持 -->
+<ul style="list-style: circle;">
+  <li>项目</li>
+</ul>
 
 <!-- ❌ 错误：微信不支持外部 CSS -->
 .hljs-comment { color: #6a737d; }
 
 <!-- ❌ 错误：深色背景 + 无颜色文字 -->
-pre { background-color: #282c34; }
-code { /* 无颜色样式 */ }
+<pre style="background-color: #282c34;">
+  <code>代码（看不清）</code>
+</pre>
 ```
+
+## ⚠️ 列表样式说明
+
+**使用 doocs/md 原版样式**：
+
+```html
+<!-- ✅ 无序列表 -->
+<ul style="list-style: circle; padding-left: 1em; margin-left: 0; color: #333;">
+  <li style="display: block; margin: 0.2em 8px; color: #333;">项目 1</li>
+  <li style="display: block; margin: 0.2em 8px; color: #333;">项目 2</li>
+</ul>
+
+<!-- ✅ 有序列表 -->
+<ol style="padding-left: 1em; margin-left: 0; color: #333;">
+  <li style="display: block; margin: 0.2em 8px; color: #333;">第一项</li>
+  <li style="display: block; margin: 0.2em 8px; color: #333;">第二项</li>
+</ol>
+```
+
+### 关键要点
+
+1. **`list-style: circle`** - 无序列表使用圆点
+2. **`padding-left: 1em`** - 左边距缩进
+3. **`display: block`** - li 设置为块级元素
+4. **有序列表** - 使用默认的数字序号
 
 ### ✅ 正确做法
 
@@ -66,13 +167,22 @@ code { /* 无颜色样式 */ }
   <p style="...">内容...</p>
 </section>
 
-<!-- ✅ 代码块：浅色背景 + 深色文字 -->
-<pre style="background-color: #f6f8fa; padding: 15px;">
-  <code style="color: #24292e;">
-    <span class="hljs-comment" style="color: #6a737d; font-style: italic;"># 注释</span>
-    node --version
-  </code>
-</pre>
+<!-- ✅ 代码块：github-dark-dimmed 主题 + Mac 风格 + 行号 -->
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; display: flex; align-items: center; padding-left: 12px;">
+    <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56;"></span>
+    <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; margin-left: 8px;"></span>
+    <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; margin-left: 8px;"></span>
+  </div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;">
+    <code style="color: #adbac7; font-size: 12.6px;">
+      <div style="display: flex;">
+        <span style="min-width: 40px; text-align: right; color: #768390; border-right: 1px solid #373e47; margin-right: 10px; padding-right: 10px;">1</span>
+        <span><span style="color: #f47067;">const</span> app = <span style="color: #dcbdfb;">express</span>();</span>
+      </div>
+    </code>
+  </pre>
+</section>
 
 <!-- ✅ 无序列表：手动添加圆点 -->
 <ul style="list-style-type: none;">
@@ -86,8 +196,8 @@ code { /* 无颜色样式 */ }
   <li><span style="margin-right: 8px; font-weight: bold;">2.</span>第二项</li>
 </ol>
 
-<!-- ✅ 图片：使用 Unsplash 免费图库 -->
-<img src="https://images.unsplash.com/..." alt="描述" />
+<!-- ✅ 图片：AI 生成或 Unsplash -->
+<img src="https://..." alt="描述" />
 ```
 
 ### 格式检查清单
@@ -95,8 +205,10 @@ code { /* 无颜色样式 */ }
 生成文章后，**必须验证**：详见 [CHECKLIST.md](./CHECKLIST.md)
 
 - [ ] **标题**只出现在公众号编辑器，**不在**内容中（避免重复）
-- [ ] **代码块背景**是 `#f6f8fa`（浅灰），**不是**深色
-- [ ] **代码文字**是 `#24292e`（深灰），**不是**无颜色
+- [ ] **代码块背景**是 `#22272e`（github-dark-dimmed），**不是**浅色
+- [ ] **代码文字**是 `#adbac7`，**高对比度**
+- [ ] **代码块有 Mac 三色按钮**（红黄绿）
+- [ ] **代码块有行号**
 - [ ] **每个语法高亮**的 `<span>` 都有 `style` 属性
 - [ ] **列表项**有手动添加的前缀（`•` 或 `1.` `2.`）
 - [ ] **没有** `list-style-type: disc/decimal`（会被微信忽略）
@@ -113,24 +225,43 @@ code { /* 无颜色样式 */ }
 - `wechat-formatter-v2.ts`（旧版，有代码块问题）
 - `wechat-formatter-v3.ts`（旧版，有代码块问题）
 
-### 配色方案（已固定）
+### 默认配置（来自 doocs/md 最佳实践）
 
-**代码块**（GitHub 风格，不随主题变化）：
-- 背景：`#f6f8fa`
-- 文字：`#24292e`
-- 注释：`#6a737d` 斜体
-- 关键字：`#d73a49` 加粗
-- 字符串：`#032f62`
-- 数字：`#005cc5`
-- 函数：`#6f42c1`
+```typescript
+const defaultStyleConfig = {
+  theme: 'default',              // 经典主题
+  fontFamily: '-apple-system-font,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei UI,Microsoft YaHei,Arial,sans-serif',  // 无衬线
+  fontSize: '14px',              // 更小字号
+  codeBlockTheme: 'github-dark-dimmed',  // 代码块主题
+  legend: 'title-alt',           // 图注格式：title 优先
+  isMacCodeBlock: true,          // Mac 代码块：开启
+  isShowLineNumber: true,        // 代码块行号：开启
+}
+```
 
-**行内代码**（使用主题色）：
-- 背景：`#f8f0f4`（玫瑰金）/ `#ecf5ff`（经典蓝）等
-- 文字：`#92617E`（玫瑰金）/ `#3585e0`（经典蓝）等
+**代码块**（github-dark-dimmed 主题）：
+- 背景：`#22272e`
+- 文字：`#adbac7`
+- 注释：`#768390` 斜体
+- 关键字：`#f47067` 加粗
+- 字符串：`#96d0ff`
+- 数字：`#6cb6ff`
+- 函数：`#dcbdfb`
+- **Mac 三色按钮**：开启（红黄绿）
+- **行号**：开启（灰色 `#768390`）
 
-**列表**（通用）：
-- 无序：`•` （Unicode 圆点）
-- 有序：`1.` `2.` `3.` ...
+**行内代码**：
+- 背景：`rgba(27, 31, 35, 0.05)`
+- 文字：`#d14`
+
+**字体**：
+- 字号：`14px`（更小）
+- 行高：`1.75`
+- 字体：无衬线（-apple-system-font 等）
+
+**列表**：
+- 无序：`circle` 样式（或手动 `•` 前缀）
+- 有序：自动编号
 
 ---
 
@@ -207,12 +338,30 @@ export WECHAT_PUBLISHER_CONFIG="/path/to/config.json"
 
 ## 可用主题
 
-- `default` - 简洁优雅（默认）
-- `dark` - 暗黑风格
-- `purple` - 紫色主题
-- `green` - 绿色清新
+- `default` - 经典（默认，蓝色主题色 `#0F4C81`）
+- `roseGold` - 玫瑰金（主题色 `#92617E`）
+- `classicBlue` - 经典蓝（主题色 `#3585e0`）
+- `jadeGreen` - 翡翠绿（主题色 `#009874`）
+- `vibrantOrange` - 活力橘（主题色 `#FA5151`）
 
-指定主题：`用 purple 主题生成一篇关于...`
+指定主题：`用 roseGold 主题生成一篇关于...`
+
+## 代码块特性
+
+**Mac 风格代码块**（默认开启）：
+- 顶部显示红黄绿三色按钮
+- 圆角设计
+- 更加美观专业
+
+**代码行号**（默认开启）：
+- 左侧显示行号
+- 灰色文字（`#768390`）
+- 右侧边框分隔
+
+**github-dark-dimmed 主题**：
+- 深色背景（`#22272e`）高对比度
+- 清晰的语法高亮
+- GitHub 风格配色
 
 ## 定时任务配置
 
