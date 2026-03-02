@@ -339,7 +339,7 @@ export WECHAT_PUBLISHER_CONFIG="/path/to/config.json"
 ## 可用主题
 
 - `default` - 经典（默认，蓝色主题色 `#0F4C81`）
-- `roseGold` - 玫瑰金（主题色 `#92617E`）
+- `roseGold` - 熏衣紫（主题色 `#8B7BA8`）
 - `classicBlue` - 经典蓝（主题色 `#3585e0`）
 - `jadeGreen` - 翡翠绿（主题色 `#009874`）
 - `vibrantOrange` - 活力橘（主题色 `#FA5151`）

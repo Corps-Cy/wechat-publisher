@@ -77,21 +77,110 @@ async function generateAIImage(prompt: string): Promise<ImageResult | null> {
 }
 
 /**
- * 智能生成封面图片（AI 优先）
+ * 智能生成封面图片（AI 优先，改进版提示词）
  */
 async function generateAICover(title: string): Promise<ImageResult | null> {
-  // 构建提示词
-  const techKeywords = ['技术', '开发', '编程', '代码', 'AI', '人工智能', '教程', '安装', '部署', 'OpenClaw']
-  const isTech = techKeywords.some(kw => title.includes(kw))
-  
-  let stylePrompt = ''
-  if (isTech) {
-    stylePrompt = 'modern technology style, clean code aesthetic, minimalist design, blue and white color scheme, futuristic, digital art'
-  } else {
-    stylePrompt = 'elegant illustration style, modern design, soft colors, clean composition, artistic'
+  // 主题关键词映射（改进版 - 更准确）
+  const themeKeywords: Record<string, { elements: string; style: string; colors: string }> = {
+    // 消息/通讯相关
+    '消息': {
+      elements: 'chat bubbles, message icons, communication symbols, flowing data streams',
+      style: 'modern tech illustration, clean and minimalist',
+      colors: 'purple and white, soft gradient'
+    },
+    '渠道': {
+      elements: 'connected nodes, network paths, channel icons, multi-directional arrows',
+      style: 'tech diagram style, professional illustration',
+      colors: 'blue and purple, modern gradient'
+    },
+    '通讯': {
+      elements: 'communication devices, chat interfaces, signal waves, connection lines',
+      style: 'digital illustration, sleek design',
+      colors: 'gradient blue to purple'
+    },
+    '机器人': {
+      elements: 'robot assistant, AI avatar, chatbot icon, friendly bot character',
+      style: 'cute tech illustration, approachable design',
+      colors: 'purple and cyan accents'
+    },
+    // 技术相关
+    '安装': {
+      elements: 'download icon, setup wizard, installation progress, gear and tools',
+      style: 'clean technical illustration, step-by-step visual',
+      colors: 'blue and green, professional'
+    },
+    '配置': {
+      elements: 'settings gears, configuration sliders, control panel, dashboard',
+      style: 'modern UI illustration, clean interface',
+      colors: 'purple and gray, elegant'
+    },
+    '开发': {
+      elements: 'code editor, terminal window, programming symbols, developer tools',
+      style: 'dark mode aesthetic, developer theme',
+      colors: 'dark blue with syntax highlighting colors'
+    },
+    // AI 相关
+    'AI': {
+      elements: 'artificial intelligence brain, neural network, glowing circuits, AI chip',
+      style: 'futuristic tech illustration, sci-fi aesthetic',
+      colors: 'deep purple and electric blue, neon accents'
+    },
+    '人工智能': {
+      elements: 'AI brain visualization, machine learning nodes, smart assistant',
+      style: 'modern AI art, sleek and futuristic',
+      colors: 'purple gradient with gold accents'
+    },
+    // 企业相关
+    '飞书': {
+      elements: 'Feishu app interface, collaboration icons, team communication, bird logo style',
+      style: 'modern app illustration, clean UI design',
+      colors: 'blue and white, Feishu brand colors'
+    },
+    '微信': {
+      elements: 'WeChat app interface, chat bubbles, messaging icons, green accents',
+      style: 'app-style illustration, clean mobile UI',
+      colors: 'green and white, WeChat brand inspired'
+    },
+    '企业微信': {
+      elements: 'enterprise chat interface, corporate communication, professional messaging',
+      style: 'business tech illustration, clean corporate style',
+      colors: 'blue and green, professional gradient'
+    },
   }
   
-  const prompt = `${title}. ${stylePrompt}. High quality cover image.`
+  // 检测主题
+  let matchedTheme: { elements: string; style: string; colors: string } | null = null
+  
+  for (const [keyword, theme] of Object.entries(themeKeywords)) {
+    if (title.includes(keyword)) {
+      if (!matchedTheme) {
+        matchedTheme = theme
+      } else {
+        matchedTheme = {
+          elements: `${matchedTheme.elements}, ${theme.elements}`,
+          style: theme.style || matchedTheme.style,
+          colors: theme.colors || matchedTheme.colors,
+        }
+      }
+    }
+  }
+  
+  // 如果没有匹配的主题，使用通用技术风格
+  if (!matchedTheme) {
+    matchedTheme = {
+      elements: 'modern technology concepts, digital innovation, tech icons',
+      style: 'clean tech illustration, professional design',
+      colors: 'blue and purple gradient, modern aesthetic'
+    }
+  }
+  
+  // 提取关键主体
+  const brandNames = title.match(/OpenClaw|飞书|企业微信|Feishu|WeChat|WeCom/gi) || []
+  const brandContext = brandNames.length > 0 ? `Related to ${[...new Set(brandNames)].join(', ')}. ` : ''
+  
+  // 构建提示词
+  const prompt = `${brandContext}${matchedTheme.elements}. ${matchedTheme.style}. ${matchedTheme.colors}. Professional illustration for WeChat article cover. High quality, clean composition, no text, no words, suitable for social media.`
+  
   return generateAIImage(prompt)
 }
 
