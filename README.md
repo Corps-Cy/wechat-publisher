@@ -99,14 +99,28 @@
 
 ## 📦 安装
 
+### 方式一：一键安装（推荐）
+
+```bash
+# 直接运行安装脚本
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/Corps-Cy/wechat-publisher/main/scripts/install.sh)"
+```
+
+### 方式二：在 OpenClaw 中安装
+
+直接对 OpenClaw 说：**"安装微信发布器"**
+
+AI 会自动帮你完成所有安装步骤。
+
+### 方式三：手动安装
+
 ```bash
 # 1. 克隆到 OpenClaw skills 目录
 cd ~/.openclaw/workspace/skills
 git clone https://github.com/Corps-Cy/wechat-publisher.git
 
 # 2. 安装依赖
-cd wechat-publisher/scripts
-npm install
+cd wechat-publisher/scripts && npm install
 
 # 3. 配置微信公众号（只需两行）
 cp .env.example .env

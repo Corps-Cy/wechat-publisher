@@ -9,6 +9,7 @@ description: |
   5. 定时多时段自动生成
   
   触发场景：
+  - 用户要求"安装微信发布器"或"安装公众号发布工具" → 执行一键安装
   - 用户要求"生成一篇公众号文章"
   - 用户要求"写一篇关于XX的文章"
   - 用户要求"定时发布公众号内容"
@@ -19,6 +20,47 @@ description: |
 # 微信公众号发布器
 
 自动化生成公众号文章，转换为微信样式，并通过 OpenClaw 消息推送预览。
+
+## ⚡ 快速安装
+
+**当用户说"安装微信发布器"、"安装公众号发布工具"、"初始化公众号"等时，执行以下步骤：**
+
+### 一键安装命令
+
+```bash
+# 直接运行安装脚本
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/Corps-Cy/wechat-publisher/main/scripts/install.sh)"
+```
+
+### 或手动安装
+
+```bash
+# 1. 克隆到 OpenClaw skills 目录
+cd ~/.openclaw/workspace/skills
+git clone https://github.com/Corps-Cy/wechat-publisher.git
+
+# 2. 安装依赖
+cd wechat-publisher/scripts && npm install
+
+# 3. 配置微信公众号
+cp .env.example .env
+# 编辑 .env，填入 WECHAT_APP_ID 和 WECHAT_APP_SECRET
+```
+
+### 安装完成后
+
+告知用户：
+```
+✅ 微信公众号发布器安装完成！
+
+📋 下一步：
+1. 配置微信公众号凭证：
+   编辑 ~/.openclaw/workspace/skills/wechat-publisher/scripts/.env
+   填入 WECHAT_APP_ID 和 WECHAT_APP_SECRET
+
+2. 开始使用：
+   "帮我生成一篇关于 XX 的公众号文章"
+```
 
 ## 🎨 文章生成引导
 
