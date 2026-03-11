@@ -1,0 +1,55 @@
+<svg width="900" height="500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:" />
+      <stop offset="100%" style="stop-color:0%," />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="900" height="500" fill="url(#bgGradient)"/>
+  
+  <!-- 装饰元素 -->
+  <circle cx="100" cy="400" r="150" fill="#00d4ff" opacity="0.1"/>
+  <circle cx="800" cy="100" r="200" fill="#00d4ff" opacity="0.1"/>
+  
+  <!-- 标题 -->
+  <text x="450" y="220" 
+        font-family="PingFang SC, Microsoft YaHei, sans-serif" 
+        font-size="48" 
+        font-weight="bold" 
+        fill="#ffffff" 
+        text-anchor="middle"
+        filter="url(#shadow)">
+    2026 年 AI 技术发展趋势
+  </text>
+  
+  <!-- 副标题 -->
+  
+  <text x="450" y="290" 
+        font-family="PingFang SC, Microsoft YaHei, sans-serif" 
+        font-size="24" 
+        fill="#ffffff" 
+        text-anchor="middle"
+        opacity="0.8">
+    从大模型到智能体革命
+  </text>
+  
+  
+  <!-- 底部装饰线 -->
+  <line x1="350" y1="350" x2="550" y2="350" 
+        stroke="#00d4ff" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- 日期 -->
+  <text x="450" y="420" 
+        font-family="PingFang SC, Microsoft YaHei, sans-serif" 
+        font-size="18" 
+        fill="#ffffff" 
+        text-anchor="middle"
+        opacity="0.6">
+    2026/2/28
+  </text>
+</svg>

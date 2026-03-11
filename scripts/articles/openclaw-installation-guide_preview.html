@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文章预览</title>
+  <style>
+    body {
+      max-width: 677px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .preview-container {
+      background: white;
+      padding: 20px 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .tip {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="tip">
+    📱 这是微信公众号预览效果，样式可能与实际略有差异
+  </div>
+  <div class="preview-container">
+    <section style="padding: 20px 15px; font-size: 14px; line-height: 1.75; color: #333; font-family: -apple-system-font, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif; text-align: left;">
+
+<h2 style="display: table; padding: 0 0.2em; margin: 4em auto 2em; background: #92617E; font-size: 16.8px; font-weight: bold; text-align: center; color: #fff;">为什么选择 OpenClaw？</h2>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">OpenClaw 是一个强大的 AI 助手框架，让你能在本地快速部署智能助手。相比云端方案，它具有完全数据隐私、高度可定制、零使用费用的优势。</p>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">根据 GitHub 数据，已有超过 2000+ 开发者在本地部署了 OpenClaw，平均部署时间仅需 <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">15 分钟</code>。</p>
+<h2 style="display: table; padding: 0 0.2em; margin: 4em auto 2em; background: #92617E; font-size: 16.8px; font-weight: bold; text-align: center; color: #fff;">前置要求</h2>
+<h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">硬件要求</h3>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">最低配置：</p>
+<ul style="list-style: circle; padding-left: 1em; margin-left: 0; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;">CPU: 2 核</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;">内存: 4GB</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;">硬盘: 10GB</li>
+</ul>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">推荐配置：</p>
+<ul style="list-style: circle; padding-left: 1em; margin-left: 0; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;">CPU: 4 核以上</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;">内存: 8GB 以上</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;">硬盘: 20GB 以上</li>
+</ul>
+<h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">软件要求</h3>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">必须安装：</p>
+<ul style="list-style: circle; padding-left: 1em; margin-left: 0; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="color: #92617E; font-weight: bold;">Node.js</strong>: <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">v18.0.0</code> 或更高版本（推荐 <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">v20+</code>）</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="color: #92617E; font-weight: bold;">npm</strong>: <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">v9.0.0</code> 或更高版本</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="color: #92617E; font-weight: bold;">Git</strong>: 最新稳定版</li>
+</ul>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">可选组件：</p>
+<ul style="list-style: circle; padding-left: 1em; margin-left: 0; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="color: #92617E; font-weight: bold;">Docker</strong>: 用于容器化部署</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="color: #92617E; font-weight: bold;">PM2</strong>: 用于进程管理（生产环境推荐）</li>
+</ul>
+<h2 style="display: table; padding: 0 0.2em; margin: 4em auto 2em; background: #92617E; font-size: 16.8px; font-weight: bold; text-align: center; color: #fff;">安装方式选择</h2>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">OpenClaw 提供三种安装方式：</p>
+<table style="color: #333; border-collapse: collapse;">
+<thead>
+<tr>
+<th style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em; font-weight: bold; background: rgba(0, 0, 0, 0.05);">方式</th>
+<th style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em; font-weight: bold; background: rgba(0, 0, 0, 0.05);">适用场景</th>
+<th style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em; font-weight: bold; background: rgba(0, 0, 0, 0.05);">难度</th>
+<th style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em; font-weight: bold; background: rgba(0, 0, 0, 0.05);">时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em;"><strong style="color: #92617E; font-weight: bold;">NPM 全局安装</strong></td>
+<td style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em;">快速体验、开发环境</td>
+<td style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em;">⭐</td>
+<td style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em;">5分钟</td>
+</tr>
+<tr>
+<td style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em;"><strong style="color: #92617E; font-weight: bold;">源码编译</strong></td>
+<td style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em;">深度定制、开发贡献</td>
+<td style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em;">⭐⭐⭐</td>
+<td style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em;">15分钟</td>
+</tr>
+<tr>
+<td style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em;"><strong style="color: #92617E; font-weight: bold;">Docker 部署</strong></td>
+<td style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em;">生产环境、团队协作</td>
+<td style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em;">⭐⭐</td>
+<td style="border: 1px solid #dfdfdf; padding: 0.25em 0.5em;">10分钟</td>
+</tr>
+</tbody></table>
+<h2 style="display: table; padding: 0 0.2em; margin: 4em auto 2em; background: #92617E; font-size: 16.8px; font-weight: bold; text-align: center; color: #fff;">方式一：NPM 全局安装（推荐新手）</h2>
+<h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">步骤 1：安装 OpenClaw CLI</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;">npm install -g @openclaw/cli</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">验证安装：</p>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;">openclaw --version</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 输出: v1.2.0 或更高版本</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">步骤 2：初始化工作空间</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 创建项目目录</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">mkdir</span> my-openclaw</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">cd</span> my-openclaw</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">5</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 初始化配置</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">6</span>
+  <span style="flex: 1; font-size: 12.6px;">openclaw init</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">7</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">系统会自动生成以下结构：</p>
+<pre><code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">my-openclaw/
+├── .openclaw/
+│   ├── config.yaml       # 主配置文件
+│   ├── agents/           # AI 助手配置
+│   └── skills/           # 技能模块
+├── workspace/
+│   ├── MEMORY.md         # 长期记忆
+│   └── USER.md           # 用户信息
+└── package.json
+</code></pre><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">步骤 3：配置 AI 模型</h3>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">编辑 <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">.openclaw/config.yaml</code>：</p>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-yaml" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-attr" style="color: #6cb6ff;">model:</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">provider:</span> <span class="hljs-string" style="color: #96d0ff;">openai</span>  <span class="hljs-comment" style="color: #768390; font-style: italic;"># 或 anthropic、google、本地模型</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">name:</span> <span class="hljs-string" style="color: #96d0ff;">gpt-4</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">apiKey:</span> <span class="hljs-string" style="color: #96d0ff;"><span style="font-family: 'Times New Roman', serif; font-style: italic; background: #f8f8f8; padding: 2px 6px; border-radius: 3px; color: #333;">{OPENAI_API_KEY}</span>  <span class="hljs-comment" style="color: #768390; font-style: italic;"># 从环境变量读取</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">5</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">6</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-attr" style="color: #6cb6ff;">server:</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">7</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">port:</span> <span class="hljs-number" style="color: #6cb6ff;">3000</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">8</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">host:</span> <span class="hljs-string" style="color: #96d0ff;">localhost</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">9</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">10</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-attr" style="color: #6cb6ff;">security:</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">11</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">enableAuth:</span> <span class="hljs-literal" style="color: #6cb6ff;">true</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">12</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">jwtSecret:</span> <span class="hljs-string" style="color: #96d0ff;"></span>{JWT_SECRET}</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">13</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">步骤 4：启动服务</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 开发模式（带热重载）</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;">openclaw dev</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 或生产模式</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">5</span>
+  <span style="flex: 1; font-size: 12.6px;">openclaw start</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">6</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">访问 <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">http://localhost:3000</code> 即可看到 Web 界面！</p>
+<h2 style="display: table; padding: 0 0.2em; margin: 4em auto 2em; background: #92617E; font-size: 16.8px; font-weight: bold; text-align: center; color: #fff;">方式二：源码编译（开发者）</h2>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">适合需要深度定制或贡献代码的开发者。</p>
+<h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">步骤 1：克隆仓库</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;">git <span class="hljs-built_in" style="color: #f69d50;">clone</span> https://github.com/openclaw/openclaw.git</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">cd</span> openclaw</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">步骤 2：安装依赖</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;">npm install</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">步骤 3：构建项目</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;">npm run build</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">步骤 4：配置环境变量</h3>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">创建 <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">.env</code> 文件：</p>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># AI 模型配置</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;">OPENAI_API_KEY=sk-xxx</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;">ANTHROPIC_API_KEY=sk-ant-xxx</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">5</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 服务配置</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">6</span>
+  <span style="flex: 1; font-size: 12.6px;">PORT=3000</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">7</span>
+  <span style="flex: 1; font-size: 12.6px;">NODE_ENV=production</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">8</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">9</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 安全配置</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">10</span>
+  <span style="flex: 1; font-size: 12.6px;">JWT_SECRET=your-secret-key-here</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">11</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">步骤 5：启动服务</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;">npm start</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h2 style="display: table; padding: 0 0.2em; margin: 4em auto 2em; background: #92617E; font-size: 16.8px; font-weight: bold; text-align: center; color: #fff;">方式三：Docker 部署（生产环境）</h2>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">生产环境推荐使用 Docker，确保环境一致性。</p>
+<h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">步骤 1：拉取镜像</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;">docker pull openclaw/openclaw:latest</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">步骤 2：创建配置文件</h3>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">创建 <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">docker-compose.yml</code>：</p>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-yaml" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-attr" style="color: #6cb6ff;">version:</span> <span class="hljs-string" style="color: #96d0ff;">&#x27;3.8&#x27;</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-attr" style="color: #6cb6ff;">services:</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">openclaw:</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">5</span>
+  <span style="flex: 1; font-size: 12.6px;">    <span class="hljs-attr" style="color: #6cb6ff;">image:</span> <span class="hljs-string" style="color: #96d0ff;">openclaw/openclaw:latest</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">6</span>
+  <span style="flex: 1; font-size: 12.6px;">    <span class="hljs-attr" style="color: #6cb6ff;">container_name:</span> <span class="hljs-string" style="color: #96d0ff;">openclaw</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">7</span>
+  <span style="flex: 1; font-size: 12.6px;">    <span class="hljs-attr" style="color: #6cb6ff;">restart:</span> <span class="hljs-string" style="color: #96d0ff;">unless-stopped</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">8</span>
+  <span style="flex: 1; font-size: 12.6px;">    <span class="hljs-attr" style="color: #6cb6ff;">ports:</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">9</span>
+  <span style="flex: 1; font-size: 12.6px;">      <span class="hljs-bullet" style="color: #eac55f;">-</span> <span class="hljs-string" style="color: #96d0ff;">"3000:3000"</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">10</span>
+  <span style="flex: 1; font-size: 12.6px;">    <span class="hljs-attr" style="color: #6cb6ff;">environment:</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">11</span>
+  <span style="flex: 1; font-size: 12.6px;">      <span class="hljs-bullet" style="color: #eac55f;">-</span> <span class="hljs-string" style="color: #96d0ff;">OPENAI_API_KEY=<span style="font-family: 'Times New Roman', serif; font-style: italic; background: #f8f8f8; padding: 2px 6px; border-radius: 3px; color: #333;">{OPENAI_API_KEY}</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">12</span>
+  <span style="flex: 1; font-size: 12.6px;">      <span class="hljs-bullet" style="color: #eac55f;">-</span> <span class="hljs-string" style="color: #96d0ff;">JWT_SECRET=</span>{JWT_SECRET}</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">13</span>
+  <span style="flex: 1; font-size: 12.6px;">      <span class="hljs-bullet" style="color: #eac55f;">-</span> <span class="hljs-string" style="color: #96d0ff;">NODE_ENV=production</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">14</span>
+  <span style="flex: 1; font-size: 12.6px;">    <span class="hljs-attr" style="color: #6cb6ff;">volumes:</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">15</span>
+  <span style="flex: 1; font-size: 12.6px;">      <span class="hljs-bullet" style="color: #eac55f;">-</span> <span class="hljs-string" style="color: #96d0ff;">./data:/app/data</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">16</span>
+  <span style="flex: 1; font-size: 12.6px;">      <span class="hljs-bullet" style="color: #eac55f;">-</span> <span class="hljs-string" style="color: #96d0ff;">./workspace:/app/workspace</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">17</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">步骤 3：启动容器</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;">docker-compose up -d</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">查看日志：</p>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;">docker-compose logs -f openclaw</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h2 style="display: table; padding: 0 0.2em; margin: 4em auto 2em; background: #92617E; font-size: 16.8px; font-weight: bold; text-align: center; color: #fff;">生产环境最佳实践</h2>
+<h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">1. 使用 PM2 进程管理</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 安装 PM2</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;">npm install -g pm2</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 启动服务</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">5</span>
+  <span style="flex: 1; font-size: 12.6px;">pm2 start openclaw --name <span class="hljs-string" style="color: #96d0ff;">"openclaw-app"</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">6</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">7</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 设置开机自启</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">8</span>
+  <span style="flex: 1; font-size: 12.6px;">pm2 startup</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">9</span>
+  <span style="flex: 1; font-size: 12.6px;">pm2 save</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">10</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">2. 配置 Nginx 反向代理</h3>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">创建 <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">/etc/nginx/sites-available/openclaw</code>：</p>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-nginx" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-section" style="color: #316dca; font-weight: bold;">server</span> {</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;">    <span class="hljs-attribute" style="color: #6cb6ff;">listen</span> <span class="hljs-number" style="color: #6cb6ff;">80</span>;</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;">    <span class="hljs-attribute" style="color: #6cb6ff;">server_name</span> your-domain.com;</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">5</span>
+  <span style="flex: 1; font-size: 12.6px;">    <span class="hljs-section" style="color: #316dca; font-weight: bold;">location</span> / {</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">6</span>
+  <span style="flex: 1; font-size: 12.6px;">        <span class="hljs-attribute" style="color: #6cb6ff;">proxy_pass</span> http://localhost:3000;</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">7</span>
+  <span style="flex: 1; font-size: 12.6px;">        <span class="hljs-attribute" style="color: #6cb6ff;">proxy_http_version</span> <span class="hljs-number" style="color: #6cb6ff;">1</span>.<span class="hljs-number" style="color: #6cb6ff;">1</span>;</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">8</span>
+  <span style="flex: 1; font-size: 12.6px;">        <span class="hljs-attribute" style="color: #6cb6ff;">proxy_set_header</span> Upgrade <span class="hljs-variable" style="color: #6cb6ff;"><span style="font-family: 'Times New Roman', serif; font-style: italic; background: #f8f8f8; padding: 2px 6px; border-radius: 3px; color: #333;">http_upgrade</span>;</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">9</span>
+  <span style="flex: 1; font-size: 12.6px;">        <span class="hljs-attribute" style="color: #6cb6ff;">proxy_set_header</span> Connection <span class="hljs-string" style="color: #96d0ff;">&#x27;upgrade&#x27;</span>;</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">10</span>
+  <span style="flex: 1; font-size: 12.6px;">        <span class="hljs-attribute" style="color: #6cb6ff;">proxy_set_header</span> Host <span class="hljs-variable" style="color: #6cb6ff;"></span>host</span>;</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">11</span>
+  <span style="flex: 1; font-size: 12.6px;">        <span class="hljs-attribute" style="color: #6cb6ff;">proxy_cache_bypass</span> <span class="hljs-variable" style="color: #6cb6ff;"><span style="font-family: 'Times New Roman', serif; font-style: italic; background: #f8f8f8; padding: 2px 6px; border-radius: 3px; color: #333;">http_upgrade</span>;</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">12</span>
+  <span style="flex: 1; font-size: 12.6px;">    }</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">13</span>
+  <span style="flex: 1; font-size: 12.6px;">}</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">14</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">启用配置：</p>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">sudo</span> <span class="hljs-built_in" style="color: #f69d50;">ln</span> -s /etc/nginx/sites-available/openclaw /etc/nginx/sites-enabled/</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">sudo</span> nginx -t</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">sudo</span> systemctl restart nginx</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">3. 启用 HTTPS（Let&#39;s Encrypt）</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">sudo</span> apt install certbot python3-certbot-nginx</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">sudo</span> certbot --nginx -d your-domain.com</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">4. 配置防火墙</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 只开放必要端口</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">sudo</span> ufw allow 22/tcp   <span class="hljs-comment" style="color: #768390; font-style: italic;"># SSH</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">sudo</span> ufw allow 80/tcp   <span class="hljs-comment" style="color: #768390; font-style: italic;"># HTTP</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">sudo</span> ufw allow 443/tcp  <span class="hljs-comment" style="color: #768390; font-style: italic;"># HTTPS</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">5</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">sudo</span> ufw <span class="hljs-built_in" style="color: #f69d50;">enable</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">6</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h2 style="display: table; padding: 0 0.2em; margin: 4em auto 2em; background: #92617E; font-size: 16.8px; font-weight: bold; text-align: center; color: #fff;">常见问题排查</h2>
+<h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">问题 1：端口被占用</h3>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">错误信息：<code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">Error: listen EADDRINUSE: address already in use :::3000</code></p>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">解决方案：</p>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 查找占用进程</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;">lsof -i :3000</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 杀掉进程</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">5</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">kill</span> -9 <PID></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">6</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">7</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 或更换端口</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">8</span>
+  <span style="flex: 1; font-size: 12.6px;">PORT=3001 openclaw start</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">9</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">问题 2：API Key 无效</h3>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">错误信息：<code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">Invalid API Key</code></p>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">检查步骤：</p>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 验证环境变量</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-built_in" style="color: #f69d50;">echo</span> <span class="hljs-variable" style="color: #6cb6ff;"></span>OPENAI_API_KEY</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 测试 API 连接</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">5</span>
+  <span style="flex: 1; font-size: 12.6px;">curl https://api.openai.com/v1/models \</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">6</span>
+  <span style="flex: 1; font-size: 12.6px;">  -H <span class="hljs-string" style="color: #96d0ff;">"Authorization: Bearer <span class="hljs-variable" style="color: #6cb6ff;">$OPENAI_API_KEY</span>"</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">7</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">问题 3：内存不足</h3>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">错误信息：<code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">JavaScript heap out of memory</code></p>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">解决方案：</p>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-bash" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-comment" style="color: #768390; font-style: italic;"># 增加 Node.js 内存限制</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;">NODE_OPTIONS=<span class="hljs-string" style="color: #96d0ff;">"--max-old-space-size=4096"</span> openclaw start</span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h2 style="display: table; padding: 0 0.2em; margin: 4em auto 2em; background: #92617E; font-size: 16.8px; font-weight: bold; text-align: center; color: #fff;">性能优化建议</h2>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">根据实测数据，以下优化可将响应速度提升 <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">40%</code>：</p>
+<h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">1. 启用缓存</h3>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">编辑 <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">.openclaw/config.yaml</code>：</p>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-yaml" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-attr" style="color: #6cb6ff;">cache:</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">enabled:</span> <span class="hljs-literal" style="color: #6cb6ff;">true</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">ttl:</span> <span class="hljs-number" style="color: #6cb6ff;">3600</span>  <span class="hljs-comment" style="color: #768390; font-style: italic;"># 缓存 1 小时</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">maxSize:</span> <span class="hljs-number" style="color: #6cb6ff;">1000</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">5</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">2. 启用流式响应</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-yaml" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-attr" style="color: #6cb6ff;">streaming:</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">enabled:</span> <span class="hljs-literal" style="color: #6cb6ff;">true</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">chunkSize:</span> <span class="hljs-number" style="color: #6cb6ff;">100</span>  <span class="hljs-comment" style="color: #768390; font-style: italic;"># 每 100 字符推送一次</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h3 style="padding-left: 8px; border-left: 3px solid #92617E; margin: 2em 8px 0.75em 0; font-size: 15.4px; font-weight: bold; line-height: 1.2; color: #333;">3. 使用连接池</h3>
+<section style="margin: 10px 8px; border-radius: 5px; overflow: hidden; background: #22272e;">
+  <div style="height: 30px; background: #1e2128; border-radius: 5px 5px 0 0; position: relative; display: flex; align-items: center; padding-left: 12px;">
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; display: inline-block; margin-left: 8px;"></span>
+  <span style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; display: inline-block; margin-left: 8px;"></span>
+</div>
+  <pre style="margin: 0; padding: 16px; overflow-x: auto; background: #22272e;"><code class="hljs language-yaml" style="color: #adbac7; font-size: 12.6px; background: transparent;"><div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">1</span>
+  <span style="flex: 1; font-size: 12.6px;"><span class="hljs-attr" style="color: #6cb6ff;">database:</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">2</span>
+  <span style="flex: 1; font-size: 12.6px;">  <span class="hljs-attr" style="color: #6cb6ff;">pool:</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">3</span>
+  <span style="flex: 1; font-size: 12.6px;">    <span class="hljs-attr" style="color: #6cb6ff;">min:</span> <span class="hljs-number" style="color: #6cb6ff;">2</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">4</span>
+  <span style="flex: 1; font-size: 12.6px;">    <span class="hljs-attr" style="color: #6cb6ff;">max:</span> <span class="hljs-number" style="color: #6cb6ff;">10</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">5</span>
+  <span style="flex: 1; font-size: 12.6px;">    <span class="hljs-attr" style="color: #6cb6ff;">idleTimeout:</span> <span class="hljs-number" style="color: #6cb6ff;">30000</span></span>
+</div>
+<div style="display: flex; min-height: 21px;">
+  <span style="min-width: 40px; padding-right: 10px; text-align: right; color: #768390; user-select: none; border-right: 1px solid #373e47; margin-right: 10px; font-size: 12.6px;">6</span>
+  <span style="flex: 1; font-size: 12.6px;"> </span>
+</div></code></pre>
+</section><h2 style="display: table; padding: 0 0.2em; margin: 4em auto 2em; background: #92617E; font-size: 16.8px; font-weight: bold; text-align: center; color: #fff;">下一步</h2>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">部署完成后，你可以：</p>
+<ol style="padding-left: 1em; margin-left: 0; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="color: #92617E; font-weight: bold;">配置 AI 助手</strong>：编辑 <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">workspace/USER.md</code> 定义你的助手人设</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="color: #92617E; font-weight: bold;">安装技能模块</strong>：从 <a style="color: #576b95; text-decoration: none;" href="https://clawhub.com">ClawHub</a> 浏览并安装社区技能</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="color: #92617E; font-weight: bold;">接入消息平台</strong>：配置 Telegram、Discord、微信等消息通道</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="color: #92617E; font-weight: bold;">设置定时任务</strong>：使用 <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">cron</code> 或 <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">HEARTBEAT</code> 实现自动化</li>
+</ol>
+<h2 style="display: table; padding: 0 0.2em; margin: 4em auto 2em; background: #92617E; font-size: 16.8px; font-weight: bold; text-align: center; color: #fff;">总结</h2>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">OpenClaw 的部署非常灵活，从个人开发到企业生产环境都有完善的解决方案。建议：</p>
+<ul style="list-style: circle; padding-left: 1em; margin-left: 0; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="color: #92617E; font-weight: bold;">新手</strong>：使用 NPM 全局安装，5 分钟即可体验</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="color: #92617E; font-weight: bold;">开发者</strong>：源码编译，方便定制和调试</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="color: #92617E; font-weight: bold;">生产环境</strong>：Docker + PM2 + Nginx，确保稳定性和安全性</li>
+</ul>
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;">遇到问题？加入 <a style="color: #576b95; text-decoration: none;" href="https://discord.com/invite/clawd">Discord 社区</a>，有 <code style="font-size: 12.6px; color: #d14; background: rgba(27, 31, 35, 0.05); padding: 3px 5px; border-radius: 4px;">2000+</code> 开发者随时提供帮助！</p>
+<hr style="border-style: solid; border-width: 2px 0 0; border-color: rgba(0, 0, 0, 0.1); transform-origin: 0 0; transform: scale(1, 0.5); height: 0.4em; margin: 1.5em 0;">
+<p style="margin: 1.5em 8px; letter-spacing: 0.1em; color: #333;"><strong style="color: #92617E; font-weight: bold;">相关资源</strong>：</p>
+<ul style="list-style: circle; padding-left: 1em; margin-left: 0; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;">官方文档：<a style="color: #576b95; text-decoration: none;" href="https://docs.openclaw.ai">https://docs.openclaw.ai</a></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;">GitHub 仓库：<a style="color: #576b95; text-decoration: none;" href="https://github.com/openclaw/openclaw">https://github.com/openclaw/openclaw</a></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;">技能市场：<a style="color: #576b95; text-decoration: none;" href="https://clawhub.com">https://clawhub.com</a></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;">社区支持：<a style="color: #576b95; text-decoration: none;" href="https://discord.com/invite/clawd">https://discord.com/invite/clawd</a></li>
+</ul>
+
+</section>
+  </div>
+</body>
+</html>

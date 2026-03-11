@@ -1,0 +1,41 @@
+{
+  "_comment": "⚠️ 此文件已废弃，请使用环境变量配置",
+  "_comment2": "复制 .env.example 为 .env 并填入真实凭证",
+  
+  "wechat": {
+    "appId": "YOUR_WECHAT_APP_ID",
+    "appSecret": "YOUR_WECHAT_APP_SECRET"
+  },
+  
+  "minio": {
+    "endpoint": "YOUR_MINIO_ENDPOINT",
+    "port": 9000,
+    "useSSL": true,
+    "accessKey": "YOUR_MINIO_ACCESS_KEY",
+    "secretKey": "YOUR_MINIO_SECRET_KEY",
+    "bucket": "wechat-images",
+    "publicUrl": "https://YOUR_MINIO_PUBLIC_URL"
+  },
+  
+  "themes": {
+    "default": "default",
+    "available": ["default", "roseGold", "classicBlue", "jadeGreen", "vibrantOrange"]
+  },
+  
+  "generator": {
+    "topics": [
+      "技术分享",
+      "行业观察",
+      "产品思考",
+      "生活随笔"
+    ],
+    "defaultTopic": "技术分享",
+    "style": "专业但不枯燥，深入浅出",
+    "length": 1500
+  },
+  
+  "schedule": {
+    "times": ["08:00", "12:00", "18:00"],
+    "timezone": "Asia/Shanghai"
+  }
+}

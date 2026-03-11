@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenClaw 故障排查手册：50 个常见问题与解决方案</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      max-width: 680px;
+      margin: 20px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .header {
+      background: #3585e0;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .content {
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>OpenClaw 故障排查手册：50 个常见问题与解决方案</h1>
+    </div>
+    <div class="content">
+      <section style="
+    font-family: -apple-system-font, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.75;
+    color: #333;
+    padding: 20px;
+    background-color: #ecf5ff;
+  "><p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><img style="display: block; max-width: 100%; margin: 10px auto; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);" src="https://s3.siliconflow.cn/default/outputs/224gxoyxzel4q_1f7ebfb60a08465dcc8e678fa07172d4_eeb5925b_49bb054f_00001_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAXXXXFILESEXAMPLE%2F20260309%2Fcn-shanghai-1%2Fs3%2Faws4_request&X-Amz-Date=20260309T042543Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Security-Token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImdyYXkiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmYWFzOmRlcDpvcHI6ZDI5Y3UzZ2gzdnZjNzNjNWJpNWc6ZTQzMDUiLCJpc3MiOiJodHRwczovL2lhbS5zaWxpY29uZmxvdy5jbiIsImlhdCI6MTc3MzAyMTE3NiwiZXhwIjoxNzczMTkzOTc2LCJ0eXAiOiJzZXJ2aWNlIiwiYXBsdCI6InNmOmZhYXM6ZmFicmljIiwidG50IjoiZDI5Y3UzZ2gzdnZjNzNjNWJpNWciLCJpZCI6ImQ2bjJmdTQ1MG1pczczZW9rbnRuIiwiYWNjZXNzIjpbeyJ0eXBlIjoiZmFhcyIsInN1YmplY3RJZCI6ImQyOWN1M2doM3Z2YzczYzViaTVnIiwiYWN0aW9ucyI6WyJmYWFzOmludm9jYXRpb246cHVsbGluZyJdfV19.MTknE7Ljp4FsQDiKoi11o9CbOn6gcTmcWhgKWJK49TBIL0IjWKqnzCooy64D5QyZ_0kSvFl_a_FqRFfFVL4hgh6I3wd0WXm0OcySgK8UKG2MDt7IympmuVHJz8RMlOgG0kHw6ZqmFp6P7bkg5bWuCrULgIuBzZT6kLurf92i8uApkxPDaPLYZ28-tBEYX7-qABnItwJ1QztYo-h2Co-yxmjvjiOSfh-B9zll6L-V_b_EiaGBYI6Zxap01MaosCWfyYRLPavBrxLvH4yPyGnI_Icom0qooWP3S5n6EgEAjkgM2hCwY_ESU8gghMYweMbaVKBTQrcD12x7_zfUGykEfUrqlhgZHt_kKh8hs4jt3o1JKtFdxLnq3t7nY8eFdwGIovosxax4N4aOeJYCooxrSRK-ZpTDuN6KqHzXzJ-3o5YrJKeLXtl-CoyChjmyR97bdVcVQ7ZqloVnhkL0XwaKWpTrzruG2T7ox2GX7TMiFNlfynHH4rNncyanDJlx0HVbr-Uc-FMJ-20Y6e_Yyd37sCDt0gMYgGdlLOkQ3WhfaK6F5fx_cMlSgnwFpXMpHKEZJaQlgwGniXLDR-jDfnYYK-JBmzCvd6uuAfzUWKE7Lb2PM4f3smwJmFkXtN_1shXjE4bqeGiGFaf_D-As49uwitUD7CaOcQ6qcWqeA4aoEjs&X-Amz-Signature=32dc1ae37edcf4e420ad65666270b6e96b0ec32b070c40a0df6d32a4e6b5fbd5" alt=""></p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;">作为一名 OpenClaw 用户，你一定遇到过各种配置问题、连接失败或者莫名其妙的报错。别担心，这份手册汇集了 50 个最常见的故障场景，帮你快速定位问题并找到解决方案。</p>
+<h2 style="margin: 20px 8px 10px; font-size: 20px; font-weight: bold; color: #3585e0; border-left: 4px solid #3585e0; padding-left: 10px;">一、安装与启动问题（1-10）</h2>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">1. OpenClaw 安装后无法启动</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：运行 <code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">openclaw start</code> 没有反应，或者提示&quot;command not found&quot;。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查安装路径是否在 PATH 中：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">echo</span> <span style="color: #f69d50;">$PATH</span>
+<span style="color: #6cb6ff;">which</span> openclaw
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">如果找不到命令，添加到 PATH：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">echo</span> <span style="color: #96d0ff;">&#x27;export PATH=&quot;$HOME/.openclaw/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.bashrc
+<span style="color: #6cb6ff;">source</span> ~/.bashrc
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">重新安装 OpenClaw：</p>
+<pre><code class="hljs language-bash">curl -fsSL https://get.openclaw.ai | sh
+</code></pre></section></li>
+</ol>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><img style="display: block; max-width: 100%; margin: 10px auto; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);" src="https://s3.siliconflow.cn/default/outputs/2lgy5w9ot7gcw_6666f3d3b86f3b9d5bd2e301d7ed6c94_a86cea51_369da274_00001_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAXXXXFILESEXAMPLE%2F20260309%2Fcn-shanghai-1%2Fs3%2Faws4_request&X-Amz-Date=20260309T042604Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Security-Token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImdyYXkiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmYWFzOmRlcDpvcHI6ZDI5Y3UzZ2gzdnZjNzNjNWJpNWc6ZTQzMDUiLCJpc3MiOiJodHRwczovL2lhbS5zaWxpY29uZmxvdy5jbiIsImlhdCI6MTc3MzAyMTE3NiwiZXhwIjoxNzczMTkzOTc2LCJ0eXAiOiJzZXJ2aWNlIiwiYXBsdCI6InNmOmZhYXM6ZmFicmljIiwidG50IjoiZDI5Y3UzZ2gzdnZjNzNjNWJpNWciLCJpZCI6ImQ2bjJmdTQ1MG1pczczZW9rbnRuIiwiYWNjZXNzIjpbeyJ0eXBlIjoiZmFhcyIsInN1YmplY3RJZCI6ImQyOWN1M2doM3Z2YzczYzViaTVnIiwiYWN0aW9ucyI6WyJmYWFzOmludm9jYXRpb246cHVsbGluZyJdfV19.MTknE7Ljp4FsQDiKoi11o9CbOn6gcTmcWhgKWJK49TBIL0IjWKqnzCooy64D5QyZ_0kSvFl_a_FqRFfFVL4hgh6I3wd0WXm0OcySgK8UKG2MDt7IympmuVHJz8RMlOgG0kHw6ZqmFp6P7bkg5bWuCrULgIuBzZT6kLurf92i8uApkxPDaPLYZ28-tBEYX7-qABnItwJ1QztYo-h2Co-yxmjvjiOSfh-B9zll6L-V_b_EiaGBYI6Zxap01MaosCWfyYRLPavBrxLvH4yPyGnI_Icom0qooWP3S5n6EgEAjkgM2hCwY_ESU8gghMYweMbaVKBTQrcD12x7_zfUGykEfUrqlhgZHt_kKh8hs4jt3o1JKtFdxLnq3t7nY8eFdwGIovosxax4N4aOeJYCooxrSRK-ZpTDuN6KqHzXzJ-3o5YrJKeLXtl-CoyChjmyR97bdVcVQ7ZqloVnhkL0XwaKWpTrzruG2T7ox2GX7TMiFNlfynHH4rNncyanDJlx0HVbr-Uc-FMJ-20Y6e_Yyd37sCDt0gMYgGdlLOkQ3WhfaK6F5fx_cMlSgnwFpXMpHKEZJaQlgwGniXLDR-jDfnYYK-JBmzCvd6uuAfzUWKE7Lb2PM4f3smwJmFkXtN_1shXjE4bqeGiGFaf_D-As49uwitUD7CaOcQ6qcWqeA4aoEjs&X-Amz-Signature=4e212a64c26131e01e573c87e621538c7f72a7e34eb9c30fa355f9b4589db26a" alt=""></p>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">2. 启动时提示&quot;端口已被占用&quot;</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：<code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">Error: Port 3000 is already in use</code>。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">查找占用端口的进程：</p>
+<pre><code class="hljs language-bash">lsof -i :3000
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">终止该进程：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">kill</span> -9 &lt;PID&gt;
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">或更改 OpenClaw 端口：</p>
+<pre><code class="hljs language-bash">openclaw config <span style="color: #6cb6ff;">set</span> port 3001
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">3. Docker 容器启动失败</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：<code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">docker run</code> 命令执行后容器立即退出。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">查看容器日志：</p>
+<pre><code class="hljs language-bash">docker logs &lt;container_id&gt;
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查挂载目录权限：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">ls</span> -la ~/.openclaw
+<span style="color: #6cb6ff;">chmod</span> -R 755 ~/.openclaw
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确保 Docker 版本 &gt;= 20.10：</p>
+<pre><code class="hljs language-bash">docker --version
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">4. 权限错误：Permission denied</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：无法访问某些文件或目录。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">修复文件权限：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">sudo</span> <span style="color: #6cb6ff;">chown</span> -R $(<span style="color: #6cb6ff;">whoami</span>):$(<span style="color: #6cb6ff;">whoami</span>) ~/.openclaw
+<span style="color: #6cb6ff;">chmod</span> -R 755 ~/.openclaw
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">如果使用 Docker，确保当前用户在 docker 组：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">sudo</span> usermod -aG docker <span style="color: #f69d50;">$USER</span>
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">5. Node.js 版本不兼容</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：提示&quot;Node.js version too old&quot;。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;">OpenClaw 需要 Node.js 18+ 或 20+。使用 nvm 安装：</p>
+<pre><code class="hljs language-bash">nvm install 20
+nvm use 20
+node --version  <span style="color: #768390; font-style: italic;"># 确认版本 &gt;= 20.0.0</span>
+</code></pre></section><h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">6. 配置文件损坏</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：启动时 JSON 解析错误。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">备份并重置配置：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">mv</span> ~/.openclaw/config.json ~/.openclaw/config.json.backup
+openclaw config init
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">手动修复 JSON 格式（如果需要保留配置）：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">cat</span> ~/.openclaw/config.json | jq .
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">7. 依赖安装失败（npm install 报错）</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：<code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">npm ERR! network timeout</code> 或包下载失败。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">切换到国内镜像源：</p>
+<pre><code class="hljs language-bash">npm config <span style="color: #6cb6ff;">set</span> registry https://registry.npmmirror.com
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">清除缓存并重试：</p>
+<pre><code class="hljs language-bash">npm cache clean --force
+npm install
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">8. 环境变量未生效</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：设置的环境变量在 OpenClaw 中无法读取。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确认环境变量已设置：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">echo</span> <span style="color: #f69d50;">$YOUR_VAR_NAME</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">在 OpenClaw 配置文件中显式声明：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;env&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;YOUR_VAR_NAME&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;value&quot;</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">9. 系统服务（systemd）启动失败</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：<code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">systemctl start openclaw</code> 失败。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">查看详细错误：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">sudo</span> journalctl -u openclaw -n 50
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查服务文件：</p>
+<pre><code class="hljs language-bash">systemctl <span style="color: #6cb6ff;">cat</span> openclaw
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">重新加载服务：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">sudo</span> systemctl daemon-reload
+<span style="color: #6cb6ff;">sudo</span> systemctl restart openclaw
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">10. Windows 上路径分隔符问题</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：文件路径错误，找不到模块。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">使用 <code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">path.join()</code> 而非硬编码路径：</p>
+<pre><code class="hljs language-javascript"><span style="color: #f47067; font-weight: bold;">const</span> path = <span style="color: #6cb6ff;">require</span>(<span style="color: #96d0ff;">&#x27;path&#x27;</span>);
+<span style="color: #f47067; font-weight: bold;">const</span> configPath = path.<span class="hljs-title function_">join</span>(__dirname, <span style="color: #96d0ff;">&#x27;config.json&#x27;</span>);
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">或在配置中使用正斜杠（Windows 兼容）：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;dataDir&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;C:/Users/YourName/.openclaw/data&quot;</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+</ol>
+<h2 style="margin: 20px 8px 10px; font-size: 20px; font-weight: bold; color: #3585e0; border-left: 4px solid #3585e0; padding-left: 10px;">二、网络与连接问题（11-20）</h2>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">11. 无法连接到 Gateway</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：<code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">Connection refused</code> 或超时。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查 Gateway 是否运行：</p>
+<pre><code class="hljs language-bash">openclaw gateway status
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">查看端口监听：</p>
+<pre><code class="hljs language-bash">netstat -tunlp | grep 8787
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">重启 Gateway：</p>
+<pre><code class="hljs language-bash">openclaw gateway restart
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">12. WebSocket 连接频繁断开</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：聊天过程中突然断线。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查网络稳定性：</p>
+<pre><code class="hljs language-bash">ping your-gateway-host
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">调整 WebSocket 超时配置：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;gateway&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;websocket&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+      <span class="hljs-attr">&quot;pingInterval&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">30000</span><span style="color: #adbac7;">,</span>
+      <span class="hljs-attr">&quot;pingTimeout&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">60000</span>
+    <span style="color: #adbac7;">}</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">13. 防火墙阻止连接</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：外网无法访问 OpenClaw。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">开放必要端口：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">sudo</span> ufw allow 8787/tcp  <span style="color: #768390; font-style: italic;"># Gateway</span>
+<span style="color: #6cb6ff;">sudo</span> ufw allow 3000/tcp  <span style="color: #768390; font-style: italic;"># Web UI</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查防火墙规则：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">sudo</span> ufw status
+</code></pre></section></li>
+</ol>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><img style="display: block; max-width: 100%; margin: 10px auto; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);" src="https://s3.siliconflow.cn/default/outputs/22qm8e2sktw8l_f00f7251cc91cba31f0d827f27b7d27e_f36fee9a_aba35663_00001_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAXXXXFILESEXAMPLE%2F20260309%2Fcn-shanghai-1%2Fs3%2Faws4_request&X-Amz-Date=20260309T042610Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Security-Token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImdyYXkiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmYWFzOmRlcDpvcHI6ZDI5Y3UzZ2gzdnZjNzNjNWJpNWc6ZTQzMDUiLCJpc3MiOiJodHRwczovL2lhbS5zaWxpY29uZmxvdy5jbiIsImlhdCI6MTc3MzAyMTE3NiwiZXhwIjoxNzczMTkzOTc2LCJ0eXAiOiJzZXJ2aWNlIiwiYXBsdCI6InNmOmZhYXM6ZmFicmljIiwidG50IjoiZDI5Y3UzZ2gzdnZjNzNjNWJpNWciLCJpZCI6ImQ2bjJmdTQ1MG1pczczZW9rbnRuIiwiYWNjZXNzIjpbeyJ0eXBlIjoiZmFhcyIsInN1YmplY3RJZCI6ImQyOWN1M2doM3Z2YzczYzViaTVnIiwiYWN0aW9ucyI6WyJmYWFzOmludm9jYXRpb246cHVsbGluZyJdfV19.MTknE7Ljp4FsQDiKoi11o9CbOn6gcTmcWhgKWJK49TBIL0IjWKqnzCooy64D5QyZ_0kSvFl_a_FqRFfFVL4hgh6I3wd0WXm0OcySgK8UKG2MDt7IympmuVHJz8RMlOgG0kHw6ZqmFp6P7bkg5bWuCrULgIuBzZT6kLurf92i8uApkxPDaPLYZ28-tBEYX7-qABnItwJ1QztYo-h2Co-yxmjvjiOSfh-B9zll6L-V_b_EiaGBYI6Zxap01MaosCWfyYRLPavBrxLvH4yPyGnI_Icom0qooWP3S5n6EgEAjkgM2hCwY_ESU8gghMYweMbaVKBTQrcD12x7_zfUGykEfUrqlhgZHt_kKh8hs4jt3o1JKtFdxLnq3t7nY8eFdwGIovosxax4N4aOeJYCooxrSRK-ZpTDuN6KqHzXzJ-3o5YrJKeLXtl-CoyChjmyR97bdVcVQ7ZqloVnhkL0XwaKWpTrzruG2T7ox2GX7TMiFNlfynHH4rNncyanDJlx0HVbr-Uc-FMJ-20Y6e_Yyd37sCDt0gMYgGdlLOkQ3WhfaK6F5fx_cMlSgnwFpXMpHKEZJaQlgwGniXLDR-jDfnYYK-JBmzCvd6uuAfzUWKE7Lb2PM4f3smwJmFkXtN_1shXjE4bqeGiGFaf_D-As49uwitUD7CaOcQ6qcWqeA4aoEjs&X-Amz-Signature=9bafb33950391db29e01586dbff04edb870b0f426c91227560537c7506c3e80c" alt=""></p>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">14. HTTPS 证书错误</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：浏览器提示&quot;不安全连接&quot;。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">使用 Let&#39;s Encrypt 获取免费证书：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">sudo</span> certbot --nginx -d yourdomain.com
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">或配置自签名证书（仅用于测试）：</p>
+<pre><code class="hljs language-bash">openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">15. 代理服务器配置问题</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：公司网络下无法访问外部 API。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">设置环境变量：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">export</span> HTTP_PROXY=http://proxy.company.com:8080
+<span style="color: #6cb6ff;">export</span> HTTPS_PROXY=http://proxy.company.com:8080
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">在 OpenClaw 配置中指定：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;proxy&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;http://proxy.company.com:8080&quot;</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">16. 跨域（CORS）错误</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：浏览器控制台显示 CORS policy 错误。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;">在 Gateway 配置中添加允许的源：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;gateway&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;cors&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+      <span class="hljs-attr">&quot;origins&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">[</span><span style="color: #96d0ff;">&quot;https://yourdomain.com&quot;</span><span style="color: #adbac7;">,</span> <span style="color: #96d0ff;">&quot;http://localhost:3000&quot;</span><span style="color: #adbac7;">]</span><span style="color: #adbac7;">,</span>
+      <span class="hljs-attr">&quot;methods&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">[</span><span style="color: #96d0ff;">&quot;GET&quot;</span><span style="color: #adbac7;">,</span> <span style="color: #96d0ff;">&quot;POST&quot;</span><span style="color: #adbac7;">,</span> <span style="color: #96d0ff;">&quot;PUT&quot;</span><span style="color: #adbac7;">,</span> <span style="color: #96d0ff;">&quot;DELETE&quot;</span><span style="color: #adbac7;">]</span><span style="color: #adbac7;">,</span>
+      <span class="hljs-attr">&quot;credentials&quot;</span><span style="color: #adbac7;">:</span> <span class="hljs-literal"><span style="color: #f47067; font-weight: bold;">true</span></span>
+    <span style="color: #adbac7;">}</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section><h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">17. 网络延迟过高</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：对话响应慢，经常超时。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查网络延迟：</p>
+<pre><code class="hljs language-bash">traceroute api.openai.com
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">启用响应流式传输：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;streaming&quot;</span><span style="color: #adbac7;">:</span> <span class="hljs-literal"><span style="color: #f47067; font-weight: bold;">true</span></span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">减少每次请求的 token 数量。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">18. 无法连接到消息平台（Telegram/Discord等）</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：消息平台显示离线，无法收发消息。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查 Bot Token 是否正确：</p>
+<pre><code class="hljs language-bash">openclaw channels list
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">验证网络可访问性：</p>
+<pre><code class="hljs language-bash">curl https://api.telegram.org/bot&lt;YOUR_TOKEN&gt;/getMe
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">查看通道日志：</p>
+<pre><code class="hljs language-bash">openclaw logs channel --name telegram
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">19. IP 被限流或封禁</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：API 返回 429 Too Many Requests。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查 API 调用频率：</p>
+<pre><code class="hljs language-bash">openclaw stats api-calls
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">增加请求间隔：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;rateLimit&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;requests&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">100</span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;period&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;1m&quot;</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">联系服务商申请提升配额。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">20. DNS 解析失败</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：无法解析域名。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">切换 DNS 服务器：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">echo</span> <span style="color: #96d0ff;">&quot;nameserver 8.8.8.8&quot;</span> | <span style="color: #6cb6ff;">sudo</span> <span style="color: #6cb6ff;">tee</span> /etc/resolv.conf
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">或使用 IP 直连（临时方案）：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">echo</span> <span style="color: #96d0ff;">&quot;151.101.1.69 api.openai.com&quot;</span> | <span style="color: #6cb6ff;">sudo</span> <span style="color: #6cb6ff;">tee</span> -a /etc/hosts
+</code></pre></section></li>
+</ol>
+<h2 style="margin: 20px 8px 10px; font-size: 20px; font-weight: bold; color: #3585e0; border-left: 4px solid #3585e0; padding-left: 10px;">三、模型与 API 问题（21-30）</h2>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">21. API Key 无效或过期</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：<code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">401 Unauthorized</code>。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">验证 API Key 格式：</p>
+<pre><code class="hljs language-bash">openclaw config get openai.apiKey
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">测试 API Key：</p>
+<pre><code class="hljs language-bash">curl https://api.openai.com/v1/models \
+  -H <span style="color: #96d0ff;">&quot;Authorization: Bearer YOUR_API_KEY&quot;</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">重新生成 API Key（在提供商控制台）。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">22. 模型调用超时</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：请求长时间无响应，最终超时。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">增加超时时间：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;providers&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;openai&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+      <span class="hljs-attr">&quot;timeout&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">120000</span>
+    <span style="color: #adbac7;">}</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查模型是否支持流式响应。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">23. 上下文长度超限</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：<code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">context_length_exceeded</code> 错误。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">减少 system prompt 长度。</p>
+</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">启用上下文压缩：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;context&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;compression&quot;</span><span style="color: #adbac7;">:</span> <span class="hljs-literal"><span style="color: #f47067; font-weight: bold;">true</span></span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;maxTokens&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">4000</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">使用支持更长上下文的模型（如 GPT-4-Turbo）。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">24. 响应质量差或答非所问</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：模型输出不相关或质量低。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">优化 system prompt：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;systemPrompt&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;你是一个专业的技术助手，回答要简洁准确。&quot;</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">调整温度参数：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;temperature&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">0.7</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">尝试不同的模型。</p>
+</li>
+</ol>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><img style="display: block; max-width: 100%; margin: 10px auto; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);" src="https://s3.siliconflow.cn/default/outputs/2dqwcxs9xbdma_7fc08bb888c758e16523b597e5423a29_08eb1826_adbf0e82_00001_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAXXXXFILESEXAMPLE%2F20260309%2Fcn-shanghai-1%2Fs3%2Faws4_request&X-Amz-Date=20260309T042615Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Security-Token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImdyYXkiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmYWFzOmRlcDpvcHI6ZDI5Y3UzZ2gzdnZjNzNjNWJpNWc6ZTQzMDUiLCJpc3MiOiJodHRwczovL2lhbS5zaWxpY29uZmxvdy5jbiIsImlhdCI6MTc3MzAyMTE3NiwiZXhwIjoxNzczMTkzOTc2LCJ0eXAiOiJzZXJ2aWNlIiwiYXBsdCI6InNmOmZhYXM6ZmFicmljIiwidG50IjoiZDI5Y3UzZ2gzdnZjNzNjNWJpNWciLCJpZCI6ImQ2bjJmdTQ1MG1pczczZW9rbnRuIiwiYWNjZXNzIjpbeyJ0eXBlIjoiZmFhcyIsInN1YmplY3RJZCI6ImQyOWN1M2doM3Z2YzczYzViaTVnIiwiYWN0aW9ucyI6WyJmYWFzOmludm9jYXRpb246cHVsbGluZyJdfV19.MTknE7Ljp4FsQDiKoi11o9CbOn6gcTmcWhgKWJK49TBIL0IjWKqnzCooy64D5QyZ_0kSvFl_a_FqRFfFVL4hgh6I3wd0WXm0OcySgK8UKG2MDt7IympmuVHJz8RMlOgG0kHw6ZqmFp6P7bkg5bWuCrULgIuBzZT6kLurf92i8uApkxPDaPLYZ28-tBEYX7-qABnItwJ1QztYo-h2Co-yxmjvjiOSfh-B9zll6L-V_b_EiaGBYI6Zxap01MaosCWfyYRLPavBrxLvH4yPyGnI_Icom0qooWP3S5n6EgEAjkgM2hCwY_ESU8gghMYweMbaVKBTQrcD12x7_zfUGykEfUrqlhgZHt_kKh8hs4jt3o1JKtFdxLnq3t7nY8eFdwGIovosxax4N4aOeJYCooxrSRK-ZpTDuN6KqHzXzJ-3o5YrJKeLXtl-CoyChjmyR97bdVcVQ7ZqloVnhkL0XwaKWpTrzruG2T7ox2GX7TMiFNlfynHH4rNncyanDJlx0HVbr-Uc-FMJ-20Y6e_Yyd37sCDt0gMYgGdlLOkQ3WhfaK6F5fx_cMlSgnwFpXMpHKEZJaQlgwGniXLDR-jDfnYYK-JBmzCvd6uuAfzUWKE7Lb2PM4f3smwJmFkXtN_1shXjE4bqeGiGFaf_D-As49uwitUD7CaOcQ6qcWqeA4aoEjs&X-Amz-Signature=efe70747f617cc19104a53a93e29893ba72d1156902b9004200255f440599e5e" alt=""></p>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">25. 费用超支</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：API 调用费用快速增长。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">设置费用预警：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;billing&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;alertThreshold&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">50</span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;hardLimit&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">100</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">启用缓存减少重复请求：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;cache&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;enabled&quot;</span><span style="color: #adbac7;">:</span> <span class="hljs-literal"><span style="color: #f47067; font-weight: bold;">true</span></span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;ttl&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">3600</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">26. 多模型切换失败</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：无法在 GPT-3.5/GPT-4 之间切换。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查模型别名配置：</p>
+<pre><code class="hljs language-bash">openclaw models list
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">明确指定模型：</p>
+<pre><code class="hljs language-bash">openclaw chat --model gpt-4-turbo
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">27. 本地模型（Ollama）连接失败</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：无法连接到本地运行的 Ollama。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确认 Ollama 正在运行：</p>
+<pre><code class="hljs language-bash">curl http://localhost:11434/api/tags
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查 OpenClaw 配置：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;providers&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;ollama&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+      <span class="hljs-attr">&quot;baseUrl&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;http://localhost:11434&quot;</span>
+    <span style="color: #adbac7;">}</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">28. 函数调用（Function Calling）失败</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：模型无法正确调用工具函数。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查函数定义格式：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;tools&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">[</span><span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;type&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;function&quot;</span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;function&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+      <span class="hljs-attr">&quot;name&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;get_weather&quot;</span><span style="color: #adbac7;">,</span>
+      <span class="hljs-attr">&quot;parameters&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+        <span class="hljs-attr">&quot;type&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;object&quot;</span><span style="color: #adbac7;">,</span>
+        <span class="hljs-attr">&quot;properties&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+          <span class="hljs-attr">&quot;location&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span><span class="hljs-attr">&quot;type&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;string&quot;</span><span style="color: #adbac7;">}</span>
+        <span style="color: #adbac7;">}</span><span style="color: #adbac7;">,</span>
+        <span class="hljs-attr">&quot;required&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">[</span><span style="color: #96d0ff;">&quot;location&quot;</span><span style="color: #adbac7;">]</span>
+      <span style="color: #adbac7;">}</span>
+    <span style="color: #adbac7;">}</span>
+  <span style="color: #adbac7;">}</span><span style="color: #adbac7;">]</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确保 model 支持函数调用。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">29. Vision 模型无法识别图片</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：发送图片后模型无响应或报错。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查图片格式（支持 JPEG/PNG/WebP）。</p>
+</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确保图片大小 &lt; 20MB。</p>
+</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">使用正确的消息格式：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;messages&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">[</span><span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;role&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;user&quot;</span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;content&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">[</span>
+      <span style="color: #adbac7;">{</span><span class="hljs-attr">&quot;type&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;text&quot;</span><span style="color: #adbac7;">,</span> <span class="hljs-attr">&quot;text&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;描述这张图片&quot;</span><span style="color: #adbac7;">}</span><span style="color: #adbac7;">,</span>
+      <span style="color: #adbac7;">{</span><span class="hljs-attr">&quot;type&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;image_url&quot;</span><span style="color: #adbac7;">,</span> <span class="hljs-attr">&quot;image_url&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span><span class="hljs-attr">&quot;url&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;data:image/jpeg;base64,...&quot;</span><span style="color: #adbac7;">}</span><span style="color: #adbac7;">}</span>
+    <span style="color: #adbac7;">]</span>
+  <span style="color: #adbac7;">}</span><span style="color: #adbac7;">]</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">30. 流式响应中断</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：流式输出中途停止。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查网络连接稳定性。</p>
+</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">调整 buffer 大小：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;streaming&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;bufferSize&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">1024</span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;flushInterval&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">100</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+</ol>
+<h2 style="margin: 20px 8px 10px; font-size: 20px; font-weight: bold; color: #3585e0; border-left: 4px solid #3585e0; padding-left: 10px;">四、消息通道问题（31-40）</h2>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">31. Telegram Bot 无响应</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：Bot 在线但不回复消息。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查 Webhook 设置：</p>
+<pre><code class="hljs language-bash">curl https://api.telegram.org/bot&lt;TOKEN&gt;/getWebhookInfo
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">重设 Webhook：</p>
+<pre><code class="hljs language-bash">curl -F <span style="color: #96d0ff;">&quot;url=https://your-domain.com/webhook/telegram&quot;</span> \
+  https://api.telegram.org/bot&lt;TOKEN&gt;/setWebhook
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">查看 Bot 日志：</p>
+<pre><code class="hljs language-bash">openclaw logs channel telegram
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">32. Discord Bot 无法连接到服务器</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：Bot 显示离线。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查 Bot Token：</p>
+<pre><code class="hljs language-bash">openclaw config get discord.token
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">验证 Bot 权限（在 Discord 开发者门户）。</p>
+</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确认 Bot 已被邀请到服务器。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">33. WhatsApp Business API 配置失败</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：无法验证 WhatsApp 号码。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确认已在 Meta Business 平台完成验证。</p>
+</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查 Webhook 回调 URL：</p>
+<pre><code class="hljs language-bash">curl -X GET <span style="color: #96d0ff;">&quot;https://your-domain.com/webhook/whatsapp?hub.mode=subscribe&amp;hub.verify_token=YOUR_TOKEN&amp;hub.challenge=test&quot;</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确保服务器使用 HTTPS。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">34. Slack App 权限不足</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：Bot 无法读取消息或发送回复。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查 OAuth Scopes：</p>
+<pre><code class="hljs language-bash">openclaw slack scopes
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">添加必要权限：</p>
+<ul style="list-style: circle; padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">app_mentions:read</code></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">chat:write</code></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">channels:history</code></li>
+</ul>
+</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">重新安装 App 到工作区。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">35. 企业微信（WeCom）应用配置错误</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：应用无法接收消息。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">验证企业 ID 和应用 Secret：</p>
+<pre><code class="hljs language-bash">openclaw config get wecom.corpId
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查可信域名设置。</p>
+</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确认 IP 白名单已添加。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">36. 飞书（Feishu）机器人事件丢失</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：部分消息未触发 Bot 响应。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查事件订阅配置：</p>
+<pre><code class="hljs language-bash">openclaw feishu events list
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确认已启用必要事件：</p>
+<ul style="list-style: circle; padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">im.message.receive_v1</code></li>
+</ul>
+</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">验证请求来源（签名校验）。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">37. IRC 连接频繁断开</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：IRC Bot 不稳定，经常掉线。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">启用自动重连：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;irc&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;autoRejoin&quot;</span><span style="color: #adbac7;">:</span> <span class="hljs-literal"><span style="color: #f47067; font-weight: bold;">true</span></span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;retryCount&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">5</span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;retryDelay&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">10000</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">配置 PING/PONG 心跳。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">38. Signal 桥接失败</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：Signal 消息无法同步。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确认 signal-cli 正在运行：</p>
+<pre><code class="hljs language-bash">ps aux | grep signal-cli
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查设备注册状态：</p>
+<pre><code class="hljs language-bash">signal-cli -u +1234567890 listDevices
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">重新链接设备（扫描二维码）。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">39. 多通道消息重复</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：同一条消息被处理多次。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">启用消息去重：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;deduplication&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;enabled&quot;</span><span style="color: #adbac7;">:</span> <span class="hljs-literal"><span style="color: #f47067; font-weight: bold;">true</span></span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;window&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">5000</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查 Webhook 是否被重复调用。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">40. 消息格式错乱</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：Markdown 或 HTML 未正确渲染。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查平台支持的格式：</p>
+<ul style="list-style: circle; padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;">Telegram: MarkdownV2 / HTML</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;">Discord: Markdown</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;">Slack: mrkdwn</li>
+</ul>
+</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">使用平台适配器：</p>
+<pre><code class="hljs language-javascript"><span style="color: #f47067; font-weight: bold;">const</span> message = <span class="hljs-title function_">formatForPlatform</span>(content, <span style="color: #96d0ff;">&#x27;telegram&#x27;</span>);
+</code></pre></section></li>
+</ol>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><img style="display: block; max-width: 100%; margin: 10px auto; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);" src="https://s3.siliconflow.cn/default/outputs/2dhf06doz0ibp_bd6176ecaf6696c05cbb3cce92bec6fb_ec9d4ff1_dd2597a0_00001_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAXXXXFILESEXAMPLE%2F20260309%2Fcn-shanghai-1%2Fs3%2Faws4_request&X-Amz-Date=20260309T042620Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Security-Token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImdyYXkiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmYWFzOmRlcDpvcHI6ZDI5Y3UzZ2gzdnZjNzNjNWJpNWc6ZTQzMDUiLCJpc3MiOiJodHRwczovL2lhbS5zaWxpY29uZmxvdy5jbiIsImlhdCI6MTc3MzAyMTE3NiwiZXhwIjoxNzczMTkzOTc2LCJ0eXAiOiJzZXJ2aWNlIiwiYXBsdCI6InNmOmZhYXM6ZmFicmljIiwidG50IjoiZDI5Y3UzZ2gzdnZjNzNjNWJpNWciLCJpZCI6ImQ2bjJmdTQ1MG1pczczZW9rbnRuIiwiYWNjZXNzIjpbeyJ0eXBlIjoiZmFhcyIsInN1YmplY3RJZCI6ImQyOWN1M2doM3Z2YzczYzViaTVnIiwiYWN0aW9ucyI6WyJmYWFzOmludm9jYXRpb246cHVsbGluZyJdfV19.MTknE7Ljp4FsQDiKoi11o9CbOn6gcTmcWhgKWJK49TBIL0IjWKqnzCooy64D5QyZ_0kSvFl_a_FqRFfFVL4hgh6I3wd0WXm0OcySgK8UKG2MDt7IympmuVHJz8RMlOgG0kHw6ZqmFp6P7bkg5bWuCrULgIuBzZT6kLurf92i8uApkxPDaPLYZ28-tBEYX7-qABnItwJ1QztYo-h2Co-yxmjvjiOSfh-B9zll6L-V_b_EiaGBYI6Zxap01MaosCWfyYRLPavBrxLvH4yPyGnI_Icom0qooWP3S5n6EgEAjkgM2hCwY_ESU8gghMYweMbaVKBTQrcD12x7_zfUGykEfUrqlhgZHt_kKh8hs4jt3o1JKtFdxLnq3t7nY8eFdwGIovosxax4N4aOeJYCooxrSRK-ZpTDuN6KqHzXzJ-3o5YrJKeLXtl-CoyChjmyR97bdVcVQ7ZqloVnhkL0XwaKWpTrzruG2T7ox2GX7TMiFNlfynHH4rNncyanDJlx0HVbr-Uc-FMJ-20Y6e_Yyd37sCDt0gMYgGdlLOkQ3WhfaK6F5fx_cMlSgnwFpXMpHKEZJaQlgwGniXLDR-jDfnYYK-JBmzCvd6uuAfzUWKE7Lb2PM4f3smwJmFkXtN_1shXjE4bqeGiGFaf_D-As49uwitUD7CaOcQ6qcWqeA4aoEjs&X-Amz-Signature=541c25726b9d20fdd89e2bb3ea67812b35c52f1a69ab410447f262a789af58eb" alt=""></p>
+<h2 style="margin: 20px 8px 10px; font-size: 20px; font-weight: bold; color: #3585e0; border-left: 4px solid #3585e0; padding-left: 10px;">五、性能与稳定性问题（41-50）</h2>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">41. 内存占用过高</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：OpenClaw 进程占用大量内存。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">启用上下文清理：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;context&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;maxAge&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">3600000</span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;cleanupInterval&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">300000</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">限制并发请求数：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;concurrency&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;maxRequests&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">10</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">监控内存使用：</p>
+<pre><code class="hljs language-bash">openclaw stats memory
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">42. CPU 使用率 100%</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：系统响应缓慢，CPU 满载。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查是否有死循环或无限重试。</p>
+</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">启用请求队列：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;queue&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;enabled&quot;</span><span style="color: #adbac7;">:</span> <span class="hljs-literal"><span style="color: #f47067; font-weight: bold;">true</span></span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;concurrency&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">5</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">使用性能分析工具：</p>
+<pre><code class="hljs language-bash">openclaw debug profile --duration 60
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">43. 数据库查询缓慢</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：历史记录加载慢。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">为常用查询创建索引：</p>
+<pre><code class="hljs language-sql"><span style="color: #f47067; font-weight: bold;">CREATE</span> INDEX idx_messages_timestamp <span style="color: #f47067; font-weight: bold;">ON</span> messages(<span class="hljs-type">timestamp</span>);
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">定期清理旧数据：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;database&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;retention&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;30d&quot;</span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;cleanup&quot;</span><span style="color: #adbac7;">:</span> <span class="hljs-literal"><span style="color: #f47067; font-weight: bold;">true</span></span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">考虑使用 Redis 缓存热点数据。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">44. 日志文件过大</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：磁盘空间被日志占满。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">配置日志轮转：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;logging&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;rotation&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+      <span class="hljs-attr">&quot;maxSize&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;10MB&quot;</span><span style="color: #adbac7;">,</span>
+      <span class="hljs-attr">&quot;maxFiles&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">5</span>
+    <span style="color: #adbac7;">}</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">减少日志级别：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;logLevel&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;warn&quot;</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">45. 定时任务（Cron）未执行</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：计划任务没有按时触发。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查 cron 表达式：</p>
+<pre><code class="hljs language-bash">openclaw cron list
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确认任务未被禁用：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;cron&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">[</span><span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;id&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;daily-summary&quot;</span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;enabled&quot;</span><span style="color: #adbac7;">:</span> <span class="hljs-literal"><span style="color: #f47067; font-weight: bold;">true</span></span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;schedule&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;0 9 * * *&quot;</span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;action&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;generateSummary&quot;</span>
+  <span style="color: #adbac7;">}</span><span style="color: #adbac7;">]</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">查看任务执行日志：</p>
+<pre><code class="hljs language-bash">openclaw logs cron
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">46. 技能（Skill）加载失败</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：自定义技能无法使用。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查技能文件格式：</p>
+<pre><code class="hljs language-bash">openclaw skills validate my-skill
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">查看加载错误：</p>
+<pre><code class="hljs language-bash">openclaw logs skills
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确保 <code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">SKILL.md</code> 格式正确。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">47. 文件上传/下载失败</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：附件处理出错。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查文件大小限制：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;files&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;maxSize&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">10485760</span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;allowedTypes&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">[</span><span style="color: #96d0ff;">&quot;image/jpeg&quot;</span><span style="color: #adbac7;">,</span> <span style="color: #96d0ff;">&quot;image/png&quot;</span><span style="color: #adbac7;">,</span> <span style="color: #96d0ff;">&quot;application/pdf&quot;</span><span style="color: #adbac7;">]</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">确认临时目录可写：</p>
+<pre><code class="hljs language-bash"><span style="color: #6cb6ff;">ls</span> -la /tmp/openclaw-uploads
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">48. 会话状态丢失</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：对话上下文突然清空。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">启用会话持久化：</p>
+<pre><code class="hljs language-json"><span style="color: #adbac7;">{</span>
+  <span class="hljs-attr">&quot;session&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #adbac7;">{</span>
+    <span class="hljs-attr">&quot;persistence&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #96d0ff;">&quot;database&quot;</span><span style="color: #adbac7;">,</span>
+    <span class="hljs-attr">&quot;backupInterval&quot;</span><span style="color: #adbac7;">:</span> <span style="color: #6cb6ff;">60000</span>
+  <span style="color: #adbac7;">}</span>
+<span style="color: #adbac7;">}</span>
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查存储空间是否充足。</p>
+</li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">49. 插件冲突</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：安装新插件后系统异常。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">禁用插件逐个排查：</p>
+<pre><code class="hljs language-bash">openclaw plugins <span style="color: #6cb6ff;">disable</span> &lt;plugin-name&gt;
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查插件兼容性：</p>
+<pre><code class="hljs language-bash">openclaw plugins check-compatibility
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">查看插件依赖关系：</p>
+<pre><code class="hljs language-bash">openclaw plugins dependencies
+</code></pre></section></li>
+</ol>
+<h3 style="margin: 15px 8px 10px; font-size: 18px; font-weight: bold; color: #333;">50. 系统崩溃后无法恢复</h3>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">症状</strong>：异常退出后重启失败。</p>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">解决方案</strong>：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">检查崩溃日志：</p>
+<pre><code class="hljs language-bash">openclaw logs crash
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">安全模式启动：</p>
+<pre><code class="hljs language-bash">openclaw start --safe-mode
+</code></pre></section></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><p style="margin: 10px 8px; text-align: justify; word-break: break-word;">重置到上次正常状态：</p>
+<pre><code class="hljs language-bash">openclaw restore --last-good-state
+</code></pre></section></li>
+</ol>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><img style="display: block; max-width: 100%; margin: 10px auto; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);" src="https://s3.siliconflow.cn/default/outputs/2f13z73qtc2h4_b4aa33a75264a207a3d4e78da2d1118d_0c4b229a_f607b58e_00001_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAXXXXFILESEXAMPLE%2F20260309%2Fcn-shanghai-1%2Fs3%2Faws4_request&X-Amz-Date=20260309T042626Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Security-Token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImdyYXkiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmYWFzOmRlcDpvcHI6ZDI5Y3UzZ2gzdnZjNzNjNWJpNWc6ZTQzMDUiLCJpc3MiOiJodHRwczovL2lhbS5zaWxpY29uZmxvdy5jbiIsImlhdCI6MTc3MzAyMTE3NiwiZXhwIjoxNzczMTkzOTc2LCJ0eXAiOiJzZXJ2aWNlIiwiYXBsdCI6InNmOmZhYXM6ZmFicmljIiwidG50IjoiZDI5Y3UzZ2gzdnZjNzNjNWJpNWciLCJpZCI6ImQ2bjJmdTQ1MG1pczczZW9rbnRuIiwiYWNjZXNzIjpbeyJ0eXBlIjoiZmFhcyIsInN1YmplY3RJZCI6ImQyOWN1M2doM3Z2YzczYzViaTVnIiwiYWN0aW9ucyI6WyJmYWFzOmludm9jYXRpb246cHVsbGluZyJdfV19.MTknE7Ljp4FsQDiKoi11o9CbOn6gcTmcWhgKWJK49TBIL0IjWKqnzCooy64D5QyZ_0kSvFl_a_FqRFfFVL4hgh6I3wd0WXm0OcySgK8UKG2MDt7IympmuVHJz8RMlOgG0kHw6ZqmFp6P7bkg5bWuCrULgIuBzZT6kLurf92i8uApkxPDaPLYZ28-tBEYX7-qABnItwJ1QztYo-h2Co-yxmjvjiOSfh-B9zll6L-V_b_EiaGBYI6Zxap01MaosCWfyYRLPavBrxLvH4yPyGnI_Icom0qooWP3S5n6EgEAjkgM2hCwY_ESU8gghMYweMbaVKBTQrcD12x7_zfUGykEfUrqlhgZHt_kKh8hs4jt3o1JKtFdxLnq3t7nY8eFdwGIovosxax4N4aOeJYCooxrSRK-ZpTDuN6KqHzXzJ-3o5YrJKeLXtl-CoyChjmyR97bdVcVQ7ZqloVnhkL0XwaKWpTrzruG2T7ox2GX7TMiFNlfynHH4rNncyanDJlx0HVbr-Uc-FMJ-20Y6e_Yyd37sCDt0gMYgGdlLOkQ3WhfaK6F5fx_cMlSgnwFpXMpHKEZJaQlgwGniXLDR-jDfnYYK-JBmzCvd6uuAfzUWKE7Lb2PM4f3smwJmFkXtN_1shXjE4bqeGiGFaf_D-As49uwitUD7CaOcQ6qcWqeA4aoEjs&X-Amz-Signature=585144847e9bddd2450a562298ad9137820ec524495f74651deba391b21e8b7f" alt=""></p>
+<hr>
+<h2 style="margin: 20px 8px 10px; font-size: 20px; font-weight: bold; color: #3585e0; border-left: 4px solid #3585e0; padding-left: 10px;">总结</h2>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;">遇到问题时，记住这套排查流程：</p>
+<ol style="padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="font-weight: bold; color: #333;">确认症状</strong> - 明确问题的具体表现</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="font-weight: bold; color: #333;">查看日志</strong> - <code style="background: rgba(27, 31, 35, 0.05); color: #d14; padding: 2px 6px; border-radius: 3px; font-size: 13px;">openclaw logs</code> 是你的好朋友</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="font-weight: bold; color: #333;">检查配置</strong> - 多数问题源于配置错误</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="font-weight: bold; color: #333;">网络诊断</strong> - 确认网络连通性</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="font-weight: bold; color: #333;">版本检查</strong> - 确保使用最新版本</li>
+<li style="display: block; margin: 0.2em 8px; color: #333;"><strong style="font-weight: bold; color: #333;">社区求助</strong> - <a href="https://discord.com/invite/clawd">OpenClaw Discord</a></li>
+</ol>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;">保持耐心，系统化排查，90% 的问题都能在 10 分钟内解决！🎉</p>
+<hr>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">📌 实用资源</strong>：</p>
+<ul style="list-style: circle; padding-left: 1em; margin: 10px 8px; color: #333;">
+<li style="display: block; margin: 0.2em 8px; color: #333;">官方文档：<a href="https://docs.openclaw.ai">https://docs.openclaw.ai</a></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;">社区论坛：<a href="https://discord.com/invite/clawd">https://discord.com/invite/clawd</a></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;">GitHub 仓库：<a href="https://github.com/openclaw/openclaw">https://github.com/openclaw/openclaw</a></li>
+<li style="display: block; margin: 0.2em 8px; color: #333;">技能市场：<a href="https://clawhub.com">https://clawhub.com</a></li>
+</ul>
+<p style="margin: 10px 8px; text-align: justify; word-break: break-word;"><strong style="font-weight: bold; color: #333;">💡 小提示</strong>：将这篇文章收藏备用，遇到问题时快速搜索关键词（如&quot;端口占用&quot;、&quot;API Key&quot;）即可找到对应解决方案！</p>
+</section>
+    </div>
+  </div>
+</body>
+</html>
