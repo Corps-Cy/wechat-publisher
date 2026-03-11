@@ -94,29 +94,6 @@ marked.use(markedHighlight({
       return hljs.highlight(code, { language: 'plaintext' }).value
     }
   }
-}))
-
-// ============================================================================
-// 主题色配置（参考 doocs/md）
-// ============================================================================
-
-export const THEME_COLORS: Record<string, { name: string; primary: string; background: string }> = {
-  // 经典系列
-  default: { name: '经典', primary: '#0F4C81', background: '#f0f5fa' },
-  classicBlue: { name: '经典蓝', primary: '#3585e0', background: '#ecf5ff' },
-  
-  // 暖色系列
-  roseGold: { name: '熏衣紫', primary: '#8B7BA8', background: '#f5f0f8' },
-  vibrantOrange: { name: '活力橘', primary: '#FA5151', background: '#fff0f0' },
-  warmRed: { name: '暖红', primary: '#D9534F', background: '#fdf2f2' },
-  golden: { name: '金黄', primary: '#F0AD4E', background: '#fff8f0' },
-  coffee: { name: '咖啡', primary: '#795548', background: '#f5f0ed' },
-  rose: { name: '玫瑰', primary: '#E91E63', background: '#fce4ec' },
-  
-  // 冷色系列
-  jadeGreen: { name: '翡翠绿', primary: '#009874', background: '#e8f5f0' },
-  forestGreen: { name: '森绿', primary: '#388E3C', background: '#E8F5E9' },
-  oceanBlue: { name: '海洋蓝', primary: '#00ACC1', background: '#E0F7FA' },
   lavender: { name: '薰衣草', primary: '#7E57C2', background: '#EDE7F6' },
   night: { name: '深夜', primary: '#455A64', background: '#ECEFF1' },
 }
