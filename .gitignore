@@ -1,0 +1,19 @@
+# 依赖
+node_modules/
+package-lock.json
+
+# 敏感配置
+.env
+.env.local
+
+# 临时文件
+*.tmp
+*.log
+
+# 生成的文章
+scripts/articles/*.md
+scripts/articles/*.html
+!scripts/articles/.gitkeep
+
+# 系统文件
+.DS_Store
