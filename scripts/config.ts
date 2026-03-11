@@ -1,90 +1,120 @@
 /**
  * 微信公众号发布器配置
  * 
- * 用户需要修改此文件中的配置
+ * ⚠️ 推荐使用 .env 文件配置，而不是修改此文件
  */
 
+import { config } from 'dotenv'
+config()
+
 export interface PublisherConfig {
-  // MinIO 图床配置
-  minio: {
-    endpoint: string      // 如: minio.example.com
-    port: number          // 端口，如 9000
-    useSSL: boolean       // 是否使用 HTTPS
-    accessKey: string     // MinIO AccessKey
-    secretKey: string     // MinIO SecretKey
-    bucket: string        // 存储桶名称
-    publicUrl: string     // 公网访问地址，如 https://cdn.example.com
+  // 微信公众号配置（必填）
+  wechat: {
+    appId: string
+    appSecret: string
+  }
+  
+  // MinIO 图床配置（可选）
+  minio?: {
+    endpoint: string
+    port: number
+    useSSL: boolean
+    accessKey: string
+    secretKey: string
+    bucket: string
+    publicUrl: string
+  }
+  
+  // 智谱AI配置（可选，自动使用 OpenClaw 内置）
+  zhipu?: {
+    apiKey: string
   }
   
   // 文章主题配置
   themes: {
-    default: string       // 默认主题
-    available: string[]   // 可用主题列表
+    default: string
+    available: string[]
   }
   
   // AI 生成配置
   generator: {
-    topics: string[]      // 可选主题列表
-    defaultTopic: string  // 默认主题
-    style: string         // 写作风格
-    length: number        // 默认文章字数
+    topics: string[]
+    defaultTopic: string
+    style: string
+    length: number
   }
   
   // 定时任务配置
   schedule: {
-    times: string[]       // 发布时间，如 ["08:00", "12:00", "18:00"]
-    timezone: string      // 时区，如 "Asia/Shanghai"
+    times: string[]
+    timezone: string
   }
 }
 
-// 默认配置模板
-export const defaultConfig: PublisherConfig = {
-  minio: {
-    endpoint: 'YOUR_MINIO_ENDPOINT',
-    port: 9000,
-    useSSL: true,
-    accessKey: 'YOUR_ACCESS_KEY',
-    secretKey: 'YOUR_SECRET_KEY',
-    bucket: 'wechat-images',
-    publicUrl: 'https://YOUR_MINIO_PUBLIC_URL'
-  },
-  
-  themes: {
-    default: 'default',
-    available: ['default', 'dark', 'purple', 'green']
-  },
-  
-  generator: {
-    topics: [
-      '技术分享',
-      '行业观察',
-      '产品思考',
-      '生活随笔'
-    ],
-    defaultTopic: '技术分享',
-    style: '专业但不枯燥，深入浅出',
-    length: 1500
-  },
-  
-  schedule: {
-    times: ['08:00', '12:00', '18:00'],
-    timezone: 'Asia/Shanghai'
+/**
+ * 从环境变量加载配置
+ */
+export function loadConfig(): PublisherConfig {
+  // 验证必填环境变量
+  if (!process.env.WECHAT_APP_ID || !process.env.WECHAT_APP_SECRET) {
+    console.error('❌ 缺少必填环境变量:')
+    console.error('   - WECHAT_APP_ID')
+    console.error('   - WECHAT_APP_SECRET')
+    console.error('\n请创建 .env 文件并配置这些变量。')
+    console.error('示例: cp .env.example .env\n')
+    throw new Error('缺少必填环境变量')
   }
-}
-
-// 加载用户配置
-export async function loadConfig(): Promise<PublisherConfig> {
-  const configPath = process.env.WECHAT_PUBLISHER_CONFIG || './config.json'
   
-  try {
-    const fs = await import('fs')
-    if (fs.existsSync(configPath)) {
-      const userConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'))
-      return { ...defaultConfig, ...userConfig }
+  const cfg: PublisherConfig = {
+    wechat: {
+      appId: process.env.WECHAT_APP_ID,
+      appSecret: process.env.WECHAT_APP_SECRET,
+    } as any,
+    
+    themes: {
+      default: 'classicBlue',
+      available: ['default', 'roseGold', 'classicBlue', 'jadeGreen', 'vibrantOrange']
+    },
+    
+    generator: {
+      topics: ['技术分享', '行业观察', '产品思考', '生活随笔'],
+      defaultTopic: '技术分享',
+      style: '专业但不枯燥，深入浅出',
+      length: 1500
+    },
+    
+    schedule: {
+      times: ['08:00'],
+      timezone: 'Asia/Shanghai'
     }
-  } catch (error) {
-    console.warn('Failed to load user config, using defaults')
   }
   
-  return defaultConfig
+  // 可选：智谱AI（用于图片生成）
+  const zhipuKey = process.env.ZAI_API_KEY || process.env.ZHIPU_API_KEY
+  if (zhipuKey) {
+    cfg.zhipu = { apiKey: zhipuKey }
+  }
+  
+  // 可选：MinIO 图床
+  if (process.env.MINIO_ENDPOINT && process.env.MINIO_ACCESS_KEY) {
+    cfg.minio = {
+      endpoint: process.env.MINIO_ENDPOINT,
+      port: parseInt(process.env.MINIO_PORT || '9000'),
+      useSSL: process.env.MINIO_USE_SSL !== 'false',
+      accessKey: process.env.MINIO_ACCESS_KEY,
+      secretKey: process.env.MINIO_SECRET_KEY || '',
+      bucket: process.env.MINIO_BUCKET || 'wechat-images',
+      publicUrl: process.env.MINIO_PUBLIC_URL || `https://${process.env.MINIO_ENDPOINT}`
+    }
+  }
+  
+  console.log('✅ 配置加载成功')
+  if (cfg.zhipu) console.log('   ✅ 智谱AI图片生成: 已启用')
+  if (cfg.minio) console.log('   ✅ MinIO图床: 已启用')
+  console.log('')
+  
+  return cfg
 }
+
+// 默认导出
+export default loadConfig
