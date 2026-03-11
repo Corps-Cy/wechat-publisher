@@ -1,5 +1,9 @@
 /**
- * 微信公众号专用格式化器 - 修复版 v3
+ * 微信公众号专用格式化器 - 修复版 v4
+ * 
+ * v4 新增：
+ * - 数学公式支持（LaTeX → CodeCogs 图片）
+ * - Mermaid 图表支持（代码 → mermaid.ink 图片）
  * 
  * 基于 doocs/md 最佳实践配置：
  * - 主题：经典 (default)
@@ -20,12 +24,60 @@ import { marked } from 'marked'
 import hljs from 'highlight.js'
 import { markedHighlight } from 'marked-highlight'
 
+// ============================================================================
+// 数学公式和 Mermaid 支持
+// ============================================================================
+
+/**
+ * 将 LaTeX 公式转换为 CodeCogs 图片 URL
+ */
+function latexToImageUrl(latex: string, isBlock: boolean = false): string {
+  const cleanLatex = latex.trim()
+  const encodedLatex = encodeURIComponent(cleanLatex)
+  const size = isBlock ? 200 : 150
+  const color = '333333'
+  return `https://latex.codecogs.com/png.latex?\\dpi{${size}}\\color{${color}}${encodedLatex}`
+}
+
+/**
+ * 将 Mermaid 代码转换为 mermaid.ink 图片 URL
+ */
+function mermaidToImageUrl(code: string): string {
+  const encoded = Buffer.from(code.trim()).toString('base64')
+  return `https://mermaid.ink/img/${encoded}`
+}
+
+/**
+ * 预处理 Markdown：转换数学公式和 Mermaid
+ */
+function preprocessMarkdown(markdown: string): string {
+  // 1. 处理块级公式 $$...$$
+  markdown = markdown.replace(/\$\$\s*([\s\S]+?)\s*\$\$/g, (_, latex) => {
+    const imageUrl = latexToImageUrl(latex.trim(), true)
+    return `\n<p style="text-align: center; margin: 1em 0;"><img src="${imageUrl}" style="max-width: 100%;"></p>\n`
+  })
+  
+  // 2. 处理行内公式 $...$（不匹配 $$）
+  markdown = markdown.replace(/(?<!\$)\$(?!\$)([^\$\n]+?)\$(?!\$)/g, (_, latex) => {
+    const imageUrl = latexToImageUrl(latex.trim(), false)
+    return `<img src="${imageUrl}" style="vertical-align: middle; margin: 0 2px; height: 1.2em;">`
+  })
+  
+  // 3. 处理 Mermaid 代码块
+  markdown = markdown.replace(/```mermaid\s*([\s\S]+?)```/g, (_, code) => {
+    const imageUrl = mermaidToImageUrl(code.trim())
+    return `\n<p style="text-align: center; margin: 1em 0;"><img src="${imageUrl}" style="max-width: 100%; border-radius: 4px;"></p>\n`
+  })
+  
+  return markdown
+}
+
 // 配置 marked
 marked.use(markedHighlight({
   langPrefix: 'hljs language-',
   highlight(code, lang) {
     if (lang === 'mermaid' || lang === 'plantuml') {
-      return code
+      return code  // 已经在预处理中转换了
     }
     const language = hljs.getLanguage(lang) ? lang : 'plaintext'
     try {
@@ -241,6 +293,9 @@ export async function renderWechatFormat(
   const theme = THEME_COLORS[themeKey]
   const isMacCodeBlock = options?.isMacCodeBlock ?? DEFAULT_CONFIG.isMacCodeBlock
   const isShowLineNumber = options?.isShowLineNumber ?? DEFAULT_CONFIG.isShowLineNumber
+  
+  // 0. 预处理：转换数学公式和 Mermaid 为图片
+  markdown = preprocessMarkdown(markdown)
   
   // 1. 解析 Markdown
   let html = await marked.parse(markdown) as string
