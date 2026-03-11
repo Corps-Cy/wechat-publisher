@@ -191,8 +191,14 @@ export async function renderWechatFormat(
   
   // 列表手动前缀
   html = html.replace(/<ul>/g, `<ul style="list-style: none; padding-left: 0;">`)
-  html = html.replace(/<li>/g, `<li style="${styles.li}"><span style="margin-right: 8px;">•</span>`)
-  html = html.replace(/<ol>/g, `<ol style="list-style: none; padding-left: 0; counter-reset: ol-counter;">`)
+  html = html.replace(/<ul[^>]*>/g, `<ul style="list-style: none; padding-left: 0;">`)
+  html = html.replace(/<ol>/g, `<ol style="padding-left: 1.5em; margin: 1em 0;">`)
+  html = html.replace(/<ol[^>]*>/g, `<ol style="padding-left: 1.5em; margin: 1em 0;">`)
+  // 无序列表项
+  html = html.replace(/<li>(?![^<]*<ol)(?![^<]*<ul)/g, `<li style="${styles.li}"><span style="color: ${theme.primary}; margin-right: 8px;">●</span>`)
+  
+  // Mac 风格代码块
+  html = html.replace(/<pre>/g, `<pre style="background: #282c34; padding: 20px 15px 15px; border-radius: 8px; overflow-x: auto; position: relative; margin: 1.5em 0;"><span style="position: absolute; top: 8px; left: 12px;"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; margin-right: 6px;"></span><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #febc2e; margin-right: 6px;"></span><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #28c840;"></span></span>`)
   
   // 表格
   html = html.replace(/<table>/g, `<table style="${styles.table}">`)
