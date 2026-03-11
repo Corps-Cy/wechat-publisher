@@ -16,7 +16,7 @@ config() // 自动加载 .env 文件
 
 import { readFileSync } from 'fs'
 import { join } from 'path'
-import { getAccessToken, createDraft, uploadPermanentMaterial, WeChatConfig } from './wechat-api.js'
+import { getAccessToken, createDraft, uploadTempMedia, uploadPermanentMaterial, WeChatConfig } from './wechat-api.js'
 import { renderWechatFormat } from './wechat-formatter-fixed.js'
 import { getSmartCover, replaceImagePlaceholders, downloadImage } from './image-fetcher.js'
 
@@ -36,6 +36,7 @@ const THEMES: Record<string, { primary: string; bg: string }> = {
   classicBlue: { primary: '#3585e0', bg: '#ecf5ff' },
   jadeGreen: { primary: '#009874', bg: '#e8f5f0' },
   vibrantOrange: { primary: '#FA5151', bg: '#fff0f0' },
+  pink: { primary: '#E91E63', bg: '#fce4ec' },  // 少女粉
 }
 
 // ============================================================================
@@ -79,7 +80,7 @@ export async function publishComplete(options: PublishOptions): Promise<string> 
   // 3. 转换为微信格式
   console.log('📝 转换微信格式...')
   const themeConfig = THEMES[theme] || THEMES.default
-  const html = renderWechatFormat(processedMarkdown, themeConfig)
+  const html = await renderWechatFormat(processedMarkdown, themeConfig)
   console.log(`   主题: ${theme}\n`)
 
   // 4. 获取封面
@@ -98,17 +99,30 @@ export async function publishComplete(options: PublishOptions): Promise<string> 
   const accessToken = await getAccessToken(WECHAT_CONFIG)
   console.log('   成功\n')
 
-  // 6. 上传封面到微信
+  // 6. 上传封面到微信（永久素材，用于草稿封面）
   if (coverUrl) {
     console.log('📤 上传封面...')
+    // 图片会被自动调整为 900x383 并转换为 JPEG 格式
     const imageBuffer = await downloadImage(coverUrl)
-    coverMediaId = await uploadPermanentMaterial(accessToken, imageBuffer, 'image')
-    console.log(`   Media ID: ${coverMediaId}\n`)
+    try {
+      const result = await uploadPermanentMaterial(accessToken, imageBuffer, 'cover.jpg', 'image')
+      coverMediaId = result.media_id
+      console.log(`   Media ID: ${coverMediaId}\n`)
+    } catch (error) {
+      console.log(`   ⚠️ 永久素材上传失败，尝试临时素材...`)
+      try {
+        coverMediaId = await uploadTempMedia(accessToken, imageBuffer, 'cover.jpg', 'image')
+        console.log(`   Media ID (临时): ${coverMediaId}\n`)
+      } catch (e2) {
+        console.log(`   ⚠️ 封面上传失败，将创建无封面草稿\n`)
+        coverMediaId = ''
+      }
+    }
   }
 
   // 7. 创建草稿
   console.log('📝 创建草稿...')
-  const draftResult = await createDraft(accessToken, {
+  const mediaId = await createDraft(accessToken, [{
     title,
     content: html,
     thumb_media_id: coverMediaId,
@@ -117,9 +131,8 @@ export async function publishComplete(options: PublishOptions): Promise<string> 
     content_source_url: '',
     need_open_comment: 0,
     only_fans_can_comment: 0,
-  })
+  }])
 
-  const mediaId = draftResult.media_id
   console.log(`✅ 草稿已创建`)
   console.log(`   Media ID: ${mediaId}\n`)
 
@@ -185,5 +198,3 @@ async function main() {
 if (import.meta.url === `file://${process.argv[1]}`) {
   main()
 }
-
-export { publishComplete }

@@ -94,9 +94,7 @@ marked.use(markedHighlight({
       return hljs.highlight(code, { language: 'plaintext' }).value
     }
   }
-  lavender: { name: '薰衣草', primary: '#7E57C2', background: '#EDE7F6' },
-  night: { name: '深夜', primary: '#455A64', background: '#ECEFF1' },
-}
+}))
 
 export type ThemeKey = keyof typeof THEME_COLORS
 

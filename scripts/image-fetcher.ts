@@ -8,6 +8,7 @@
 
 import { writeFileSync } from 'fs'
 import { join } from 'path'
+import sharp from 'sharp'
 
 const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY || ''
 
@@ -324,19 +325,35 @@ export async function fetchArticleImages(
  */
 export async function downloadImage(
   url: string,
-  outputPath: string
-): Promise<void> {
+  outputPath?: string
+): Promise<Buffer> {
   try {
     const response = await fetch(url)
-    
+
     if (!response.ok) {
       throw new Error(`下载失败: ${response.status}`)
     }
-    
-    const buffer = Buffer.from(await response.arrayBuffer())
-    writeFileSync(outputPath, buffer)
-    
-    console.log(`✅ 图片已保存: ${outputPath}\n`)
+
+    const arrayBuffer = await response.arrayBuffer()
+    let buffer = Buffer.from(arrayBuffer)
+
+    // 使用 sharp 调整尺寸并转换为 JPEG（微信封面推荐 900x383，2.35:1 比例）
+    buffer = await sharp(buffer)
+      .resize(900, 383, {
+        fit: 'cover',
+        position: 'center'
+      })
+      .jpeg({ quality: 85 })
+      .toBuffer()
+
+    if (outputPath) {
+      // 确保输出文件扩展名为 .jpg
+      const jpgPath = outputPath.replace(/\.(png|webp|gif)$/i, '.jpg')
+      writeFileSync(jpgPath, buffer)
+      console.log(`✅ 图片已保存: ${jpgPath}\n`)
+    }
+
+    return buffer
   } catch (error) {
     console.error(`❌ 下载图片失败: ${error}\n`)
     throw error

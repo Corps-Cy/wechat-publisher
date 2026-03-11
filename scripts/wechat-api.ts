@@ -206,6 +206,78 @@ export async function uploadArticleImage(
 }
 
 /**
+ * 上传临时素材（用于草稿封面）
+ * 临时素材有效期为3天
+ */
+export async function uploadTempMedia(
+  accessToken: string,
+  imagePathOrBuffer: string | Buffer,
+  filename?: string,
+  type: 'image' | 'thumb' = 'image'
+): Promise<string> {
+  const url = `https://api.weixin.qq.com/cgi-bin/media/upload?access_token=${accessToken}&type=${type}`
+
+  try {
+    let buffer: Buffer
+    let name = filename || 'cover.jpg'
+
+    if (typeof imagePathOrBuffer === 'string') {
+      const fs = await import('fs')
+      buffer = fs.readFileSync(imagePathOrBuffer)
+      name = imagePathOrBuffer.split('/').pop() || name
+    } else {
+      buffer = imagePathOrBuffer
+    }
+
+    // 获取 MIME 类型
+    const getMimeType = (filename: string): string => {
+      const ext = filename.split('.').pop()?.toLowerCase() || 'jpg'
+      const mimeTypes: Record<string, string> = {
+        'jpg': 'image/jpeg',
+        'jpeg': 'image/jpeg',
+        'png': 'image/png',
+        'gif': 'image/gif'
+      }
+      return mimeTypes[ext] || 'image/jpeg'
+    }
+
+    // 构建 multipart/form-data
+    const boundary = '----' + crypto.randomBytes(16).toString('hex')
+    const mimeType = getMimeType(name)
+
+    const formData = Buffer.concat([
+      Buffer.from(`--${boundary}\r\n`),
+      Buffer.from(`Content-Disposition: form-data; name="media"; filename="${name}"\r\n`),
+      Buffer.from(`Content-Type: ${mimeType}\r\n\r\n`),
+      buffer,
+      Buffer.from(`\r\n--${boundary}--\r\n`)
+    ])
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': `multipart/form-data; boundary=${boundary}`
+      },
+      body: formData
+    })
+
+    const data = await response.json() as MediaResponse
+
+    if (data.errcode) {
+      throw new Error(`上传临时素材失败: ${data.errmsg} (${data.errcode})`)
+    }
+
+    console.log(`✅ 临时素材上传成功`)
+    console.log(`   Media ID: ${data.media_id}`)
+
+    return data.media_id
+  } catch (error) {
+    console.error('❌ 上传临时素材失败:', error)
+    throw error
+  }
+}
+
+/**
  * 上传永久素材（用于封面）
  */
 export async function uploadPermanentMaterial(
